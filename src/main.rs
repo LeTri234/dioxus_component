@@ -4,10 +4,10 @@ mod components;
 mod utils;
 
 use components::{
-    Avatar, AvatarFallback, AvatarImage, Button, ButtonVariant, Spinner, SpinnerSize,
+    Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionType, Avatar,
+    AvatarFallback, AvatarImage, Button, ButtonVariant, Spinner, SpinnerSize, Tooltip,
+    TooltipContent, TooltipProvider, TooltipTrigger,
 };
-
-use crate::components::{Tooltip, TooltipContent, TooltipProvider, TooltipTrigger};
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -136,6 +136,72 @@ fn Home() -> Element {
                             color: "text-primary-foreground"
                         }
                         "Loading..."
+                    }
+                }
+            }
+
+            // Accordion Example
+            div {
+                class: "w-full max-w-2xl space-y-4",
+                h2 { class: "text-2xl font-bold text-center", "Accordion Example:" }
+
+                Accordion {
+                    accordion_type: AccordionType::Single { collapsible: true },
+                    class: "w-full",
+
+                    AccordionItem {
+                        value: "item-1",
+                        AccordionTrigger { "Is it accessible?" }
+                        AccordionContent {
+                            "Yes. It adheres to the WAI-ARIA design pattern."
+                        }
+                    }
+
+                    AccordionItem {
+                        value: "item-2",
+                        AccordionTrigger { "Is it styled?" }
+                        AccordionContent {
+                            "Yes. It comes with default styles that matches the other components aesthetic."
+                        }
+                    }
+
+                    AccordionItem {
+                        value: "item-3",
+                        AccordionTrigger { "Is it animated?" }
+                        AccordionContent {
+                            "Yes. It's animated by default, but you can disable it if you prefer."
+                        }
+                    }
+                }
+
+                h3 { class: "text-xl font-bold text-center mt-8", "Multiple Accordion:" }
+
+                Accordion {
+                    accordion_type: AccordionType::Multiple,
+                    class: "w-full",
+
+                    AccordionItem {
+                        value: "feature-1",
+                        AccordionTrigger { "Feature 1" }
+                        AccordionContent {
+                            "This accordion allows multiple items to be open at the same time."
+                        }
+                    }
+
+                    AccordionItem {
+                        value: "feature-2",
+                        AccordionTrigger { "Feature 2" }
+                        AccordionContent {
+                            "Try opening multiple sections at once!"
+                        }
+                    }
+
+                    AccordionItem {
+                        value: "feature-3",
+                        AccordionTrigger { "Feature 3" }
+                        AccordionContent {
+                            "All sections can be open simultaneously or all closed."
+                        }
                     }
                 }
             }
