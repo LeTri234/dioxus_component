@@ -17,6 +17,7 @@
     --font-weight-medium: 500;
     --font-weight-bold: 700;
     --radius-md: 0.75rem;
+    --animate-spin: spin 1s linear infinite;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
@@ -235,6 +236,9 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
@@ -259,6 +263,14 @@
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
+  .size-4 {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+  .size-6 {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+  }
   .size-8 {
     width: calc(var(--spacing) * 8);
     height: calc(var(--spacing) * 8);
@@ -270,6 +282,10 @@
   .size-10 {
     width: calc(var(--spacing) * 10);
     height: calc(var(--spacing) * 10);
+  }
+  .size-12 {
+    width: calc(var(--spacing) * 12);
+    height: calc(var(--spacing) * 12);
   }
   .h-8 {
     height: calc(var(--spacing) * 8);
@@ -302,6 +318,9 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .animate-spin {
+    animation: var(--animate-spin);
   }
   .flex-col {
     flex-direction: column;
@@ -420,6 +439,12 @@
   }
   .whitespace-nowrap {
     white-space: nowrap;
+  }
+  .text-current {
+    color: currentcolor;
+  }
+  .text-destructive {
+    color: var(--color-destructive);
   }
   .text-primary {
     color: var(--color-primary);
@@ -667,6 +692,17 @@
     }
   }
 }
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
 @keyframes slideUpAndFade {
   from {
     opacity: 0;
@@ -843,6 +879,11 @@
   syntax: "*";
   inherits: false;
   initial-value: 0 0 #0000;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {

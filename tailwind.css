@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @source "./src/**/*.{rs,html,css}";
 
+/* Spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 /* Tooltip animations - Based on Radix UI */
 @keyframes slideUpAndFade {
   from {

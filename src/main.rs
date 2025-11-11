@@ -3,7 +3,9 @@ use dioxus::prelude::*;
 mod components;
 mod utils;
 
-use components::{Avatar, AvatarFallback, AvatarImage, Button, ButtonVariant};
+use components::{
+    Avatar, AvatarFallback, AvatarImage, Button, ButtonVariant, Spinner, SpinnerSize,
+};
 
 use crate::components::{Tooltip, TooltipContent, TooltipProvider, TooltipTrigger};
 
@@ -63,6 +65,7 @@ fn Home() -> Element {
 
             div {
                 class: "text-center space-y-4",
+                h2 { class: "text-2xl font-bold", "Tooltip Example:" }
                 TooltipProvider {
                     Tooltip {
                         TooltipTrigger {
@@ -75,6 +78,64 @@ fn Home() -> Element {
                             side: components::TooltipSide::Bottom,
                             "This is a tooltip!"
                         }
+                    }
+                }
+            }
+
+            // Spinner Examples
+            div {
+                class: "text-center space-y-4",
+                h2 { class: "text-2xl font-bold", "Spinner Examples:" }
+                div {
+                    class: "flex gap-4 items-center justify-center",
+
+                    div {
+                        class: "flex flex-col gap-2 items-center",
+                        Spinner {
+                            size: SpinnerSize::Small,
+                        }
+                        span { class: "text-sm", "Small" }
+                    }
+
+                    div {
+                        class: "flex flex-col gap-2 items-center",
+                        Spinner {
+                            size: SpinnerSize::Medium,
+                            color: "text-primary"
+                        }
+                        span { class: "text-sm", "Medium" }
+                    }
+
+                    div {
+                        class: "flex flex-col gap-2 items-center",
+                        Spinner {
+                            size: SpinnerSize::Large,
+                            color: "text-destructive"
+                        }
+                        span { class: "text-sm", "Large" }
+                    }
+
+                    div {
+                        class: "flex flex-col gap-2 items-center",
+                        Spinner {
+                            size: SpinnerSize::XLarge,
+                            color: "text-secondary-foreground"
+                        }
+                        span { class: "text-sm", "XLarge" }
+                    }
+                }
+
+                // Spinner in button
+                div {
+                    class: "flex gap-4 justify-center mt-4",
+                    Button {
+                        variant: ButtonVariant::Default,
+                        class_name: "gap-2",
+                        Spinner {
+                            size: SpinnerSize::Small,
+                            color: "text-primary-foreground"
+                        }
+                        "Loading..."
                     }
                 }
             }
