@@ -27,11 +27,39 @@ fn main() {
 
 #[component]
 fn App() -> Element {
+    // Track if the app is hydrated/loaded
+    let mut is_loaded = use_signal(|| false);
+
+    // Set loaded after first render
+    use_effect(move || {
+        is_loaded.set(true);
+    });
+
     rsx! {
         document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "stylesheet", href: MAIN_CSS }
         document::Link { rel: "stylesheet", href: TAILWIND_CSS }
-        Router::<Route> {}
+
+        // Loading overlay
+        if !is_loaded() {
+            div {
+                class: "fixed inset-0 bg-background flex items-center justify-center z-50",
+                style: "min-height: 100vh;",
+                div {
+                    class: "text-center space-y-4",
+                    div {
+                        class: "inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"
+                    }
+                    p { class: "text-lg text-muted-foreground", "Loading components..." }
+                }
+            }
+        }
+
+        // Main content with opacity transition
+        div {
+            class: if is_loaded() { "opacity-100 transition-opacity duration-300" } else { "opacity-0" },
+            Router::<Route> {}
+        }
     }
 }
 
