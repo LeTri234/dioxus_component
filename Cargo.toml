@@ -31,3 +31,10 @@ desktop = ["dioxus/desktop"]
 mobile = ["dioxus/mobile"]
 demo = []
 
+[profile.release]
+opt-level = "z"        # Optimize for size
+lto = true             # Enable Link Time Optimization
+codegen-units = 1      # Better optimization (slower compile)
+strip = true           # Strip debug symbols
+panic = "abort"        # Smaller panic handler
+
