@@ -55,7 +55,7 @@ pub struct ButtonProps {
 
     // Optional extra class names from the caller.
     #[props(optional)]
-    pub class_name: Option<String>,
+    pub class: Option<String>,
 
     // Variant and size are optional; we'll fall back to defaults if not provided.
     #[props(optional)]
@@ -92,7 +92,7 @@ pub fn Button(props: ButtonProps) -> Element {
         Some(base),
         Some(variant.as_str()),
         Some(size.as_str()),
-        props.class_name.as_deref(),
+        props.class.as_deref(),
     ]);
 
     let tag = props.as_.as_deref().unwrap_or("button");

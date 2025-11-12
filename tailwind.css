@@ -1,93 +1,12 @@
 @import "tailwindcss";
 @source "./src/**/*.{rs,html,css}";
 
-/* Spinner animation */
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin {
-  animation: spin 1s linear infinite;
-}
-
-/* Tooltip animations - Based on Radix UI */
-@keyframes slideUpAndFade {
-  from {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideRightAndFade {
-  from {
-    opacity: 0;
-    transform: translateX(-2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideDownAndFade {
-  from {
-    opacity: 0;
-    transform: translateY(-2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideLeftAndFade {
-  from {
-    opacity: 0;
-    transform: translateX(2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Tooltip content styling */
-.tooltip-content {
-  animation-duration: 400ms !important;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
-  animation-fill-mode: both !important;
-  will-change: transform, opacity;
-  user-select: none;
-}
-
-.tooltip-content[data-state="delayed-open"][data-side="top"],
-.tooltip-content[data-state="instant-open"][data-side="top"] {
-  animation-name: slideDownAndFade !important;
-}
-
-.tooltip-content[data-state="delayed-open"][data-side="right"],
-.tooltip-content[data-state="instant-open"][data-side="right"] {
-  animation-name: slideLeftAndFade !important;
-}
-
-.tooltip-content[data-state="delayed-open"][data-side="bottom"],
-.tooltip-content[data-state="instant-open"][data-side="bottom"] {
-  animation-name: slideUpAndFade !important;
-}
-
-.tooltip-content[data-state="delayed-open"][data-side="left"],
-.tooltip-content[data-state="instant-open"][data-side="left"] {
-  animation-name: slideRightAndFade !important;
-}
+/* Import component-specific CSS */
+@import "./src/components/tooltip/tooltip.css";
+@import "./src/components/accordion/accordion.css";
+@import "./src/components/avatar/avatar.css";
+@import "./src/components/button/button.css";
+@import "./src/components/spinner/spinner.css";
 
 @theme {
   --color-background: hsl(0 0% 100%);

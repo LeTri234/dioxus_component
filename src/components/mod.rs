@@ -1,8 +1,10 @@
+pub mod accordion;
 pub mod avatar;
 pub mod button;
 pub mod spinner;
 pub mod tooltip;
 
+pub use accordion::*;
 pub use avatar::*;
 pub use button::*;
 pub use spinner::*;
