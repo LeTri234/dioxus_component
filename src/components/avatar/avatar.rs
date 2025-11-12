@@ -50,7 +50,7 @@ pub struct AvatarProps {
     pub children: Element,
 
     #[props(optional)]
-    pub class_name: Option<String>,
+    pub class: Option<String>,
 }
 
 #[component]
@@ -62,7 +62,7 @@ pub fn Avatar(props: AvatarProps) -> Element {
 
     let class_name = utils::cn(vec![
         Some("relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"),
-        props.class_name.as_deref(),
+        props.class.as_deref(),
     ]);
 
     rsx! {
@@ -85,7 +85,7 @@ pub struct AvatarImageProps {
     pub alt: Option<String>,
 
     #[props(optional)]
-    pub class_name: Option<String>,
+    pub class: Option<String>,
 
     #[props(optional)]
     pub referrer_policy: Option<String>,
@@ -122,7 +122,7 @@ pub fn AvatarImage(props: AvatarImageProps) -> Element {
 
     let class_name = utils::cn(vec![
         Some("aspect-square h-full w-full object-cover"),
-        props.class_name.as_deref(),
+        props.class.as_deref(),
     ]);
 
     let src = props.src.clone();
@@ -158,7 +158,7 @@ pub struct AvatarFallbackProps {
     pub children: Element,
 
     #[props(optional)]
-    pub class_name: Option<String>,
+    pub class: Option<String>,
 }
 
 #[component]
@@ -167,7 +167,7 @@ pub fn AvatarFallback(props: AvatarFallbackProps) -> Element {
 
     let class_name = utils::cn(vec![
         Some("flex h-full w-full items-center justify-center rounded-full bg-muted"),
-        props.class_name.as_deref(),
+        props.class.as_deref(),
     ]);
 
     // Only render if image is not loaded

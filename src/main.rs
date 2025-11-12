@@ -130,7 +130,7 @@ fn Home() -> Element {
                     class: "flex gap-4 justify-center mt-4",
                     Button {
                         variant: ButtonVariant::Default,
-                        class_name: "gap-2",
+                        class: "gap-2",
                         Spinner {
                             size: SpinnerSize::Small,
                             color: "text-primary-foreground"
@@ -153,7 +153,7 @@ fn Home() -> Element {
                         value: "item-1",
                         AccordionTrigger { "Is it accessible?" }
                         AccordionContent {
-                            "Yes. It adheres to the WAI-ARIA design pattern."
+                            "Yes. It adheres to the WAI-ARIA design pattern. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         }
                     }
 

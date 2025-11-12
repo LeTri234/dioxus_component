@@ -340,56 +340,16 @@ pub struct AccordionContentProps {
 #[component]
 pub fn AccordionContent(props: AccordionContentProps) -> Element {
     let item_context = use_context::<AccordionItemContext>();
-    let mut content_ref = use_signal(|| None::<web_sys::HtmlElement>);
-    let mut inner_ref = use_signal(|| None::<web_sys::HtmlElement>);
-    let mut measured_height = use_signal(|| 0);
-
     let is_open = item_context.is_open();
 
-    // Measure content height when refs are ready
-    use_effect(move || {
-        if let Some(inner) = inner_ref() {
-            let height = inner.scroll_height();
-            measured_height.set(height);
-        }
-    });
-
-    // Update height when state changes
-    use_effect(move || {
-        if let Some(outer) = content_ref() {
-            let height = measured_height();
-
-            if height > 0 {
-                let style_value = if is_open {
-                    format!(
-                        "--radix-accordion-content-height: {}px; height: {}px;",
-                        height, height
-                    )
-                } else {
-                    format!(
-                        "--radix-accordion-content-height: {}px; height: 0px;",
-                        height
-                    )
-                };
-                let _ = outer.set_attribute("style", &style_value);
-            }
-        }
-    });
-
-    let base_class = "overflow-hidden text-sm transition-[height] duration-300 ease-[cubic-bezier(0.87,0,0.13,1)]";
-
+    let base_class =
+        "overflow-hidden text-sm transition-all duration-300 ease-[cubic-bezier(0.87,0,0.13,1)]";
     let class_name = utils::cn(vec![Some(base_class), props.class.as_deref()]);
 
-    // Set initial inline style based on state
-    let initial_style = if is_open {
-        let h = measured_height();
-        if h > 0 {
-            format!("height: {}px;", h)
-        } else {
-            String::new()
-        }
+    let style = if is_open {
+        "max-height: 1000px; opacity: 1;"
     } else {
-        "height: 0px;".to_string()
+        "max-height: 0; opacity: 0;"
     };
 
     rsx! {
@@ -397,20 +357,10 @@ pub fn AccordionContent(props: AccordionContentProps) -> Element {
             class: "{class_name}",
             "data-state": if is_open { "open" } else { "closed" },
             role: "region",
-            style: "{initial_style}",
-            onmounted: move |event| {
-                if let Some(element) = event.data().downcast::<web_sys::HtmlElement>() {
-                    content_ref.set(Some(element.clone()));
-                }
-            },
+            style: "{style}",
 
             div {
                 class: "pb-4 pt-0",
-                onmounted: move |event| {
-                    if let Some(element) = event.data().downcast::<web_sys::HtmlElement>() {
-                        inner_ref.set(Some(element.clone()));
-                    }
-                },
                 {props.children}
             }
         }
