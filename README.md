@@ -2,6 +2,7 @@
 
 A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind CSS v4 and following Radix UI design patterns.
 
+[![Crates.io](https://img.shields.io/crates/v/dioxus_components.svg)](https://crates.io/crates/dioxus_components)
 [![Rust](https://img.shields.io/badge/rust-1.70%2B-orange.svg)](https://www.rust-lang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -36,8 +37,14 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-dioxus_components = { path = "./dioxus_components" }
+dioxus_components = "0.1"
 dioxus = { version = "0.7.1", features = ["web"] }
+```
+
+Or add with cargo:
+
+```bash
+cargo add dioxus_components
 ```
 
 ## Quick Start
@@ -88,9 +95,10 @@ cargo build --lib
 Run the demo application:
 
 ```bash
-cargo run --example demo --target wasm32-unknown-unknown
 dx serve --example demo
 ```
+
+This will start a development server with hot reloading and open the demo in your browser.
 
 ## Project Structure
 
@@ -117,7 +125,7 @@ COMPONENTS.md             # Full component documentation
 This project is configured as a Rust library that can be:
 
 1. Used as a dependency in other Dioxus projects
-2. Published to crates.io
+2. Published to crates.io ✅ **Now published!**
 3. Used locally via path dependencies
 
 ### Library Exports
@@ -134,6 +142,23 @@ pub use dioxus_components::{
     Tooltip, TooltipTrigger, TooltipContent, TooltipProvider,
     cn, // utility function
 };
+```
+
+## Published on Crates.io
+
+This library is published and available on [crates.io](https://crates.io/crates/dioxus_components).
+
+Install it in your project:
+
+```bash
+cargo add dioxus_components
+```
+
+Or manually add to `Cargo.toml`:
+
+```toml
+[dependencies]
+dioxus_components = "0.1"
 ```
 
 ## Customization
@@ -185,28 +210,21 @@ cargo doc --lib --open
 
 MIT
 
+## Changelog
+
+### v0.1.0 - Published 🎉
+
+- ✅ Initial release on crates.io
+- ✅ 6 core components (Accordion, Avatar, Badge, Button, Spinner, Tooltip)
+- ✅ Tailwind CSS v4 integration
+- ✅ Full WAI-ARIA compliance
+- ✅ Dark mode support
+- ✅ Comprehensive documentation
+
 ## Resources
 
+- [Crates.io Package](https://crates.io/crates/dioxus_components)
 - [Dioxus Documentation](https://dioxuslabs.com/learn/0.7/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Radix UI](https://www.radix-ui.com/)
-
-3. Run the following command in the root of the project to start the Tailwind CSS compiler:
-
-```bash
-npx @tailwindcss/cli -i ./input.css -o ./assets/tailwind.css --watch
-```
-
-### Serving Your App
-
-Run the following command in the root of your project to start developing with the default platform:
-
-```bash
-dx serve
-```
-
-To run for a different platform, use the `--platform platform` flag. E.g.
-
-```bash
-dx serve --platform desktop
-```
+- [Documentation](COMPONENTS.md)
