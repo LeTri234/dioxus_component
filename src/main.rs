@@ -5,8 +5,8 @@ mod utils;
 
 use components::{
     Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionType, Avatar,
-    AvatarFallback, AvatarImage, Button, ButtonVariant, Spinner, SpinnerSize, Tooltip,
-    TooltipContent, TooltipProvider, TooltipTrigger,
+    AvatarFallback, AvatarImage, Badge, BadgeVariant, Button, ButtonVariant, Spinner, SpinnerSize,
+    Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
 };
 
 #[derive(Debug, Clone, Routable, PartialEq)]
@@ -246,6 +246,27 @@ fn Home() -> Element {
                 }
                 Button {
                     variant: ButtonVariant::Outline,
+                    "Outline"
+                }
+            }
+
+            // Badge Example
+            div {
+                class: "flex gap-4 flex-wrap mt-8",
+                h2 { class: "w-full text-2xl font-bold", "Badge Examples:" }
+                Badge {
+                    "Default"
+                }
+                Badge {
+                    variant: BadgeVariant::Secondary,
+                    "Secondary"
+                }
+                Badge {
+                    variant: BadgeVariant::Destructive,
+                    "Destructive"
+                }
+                Badge {
+                    variant: BadgeVariant::Outline,
                     "Outline"
                 }
             }
