@@ -8,6 +8,6 @@
 
 node_modules
 
-# Dioxus build output
-dist/
+# Dioxus build output (keep dist/ for Vercel deployment)
+# dist/
 .vercel
