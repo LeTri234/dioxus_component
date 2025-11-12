@@ -50,9 +50,6 @@
 //!
 //! All components use Tailwind CSS v4. Import the component styles in your `tailwind.css`:
 //!
-//! ```css
-//! @import "node_modules/dioxus_components/src/components/**/*.css";
-//! ```
 //!
 //! For a complete example, see the `examples/` directory.
 

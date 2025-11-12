@@ -421,7 +421,6 @@ fn Home() -> Element {
             }
         }
 
-        Hero {}
     }
 }
 
