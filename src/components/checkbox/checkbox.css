@@ -1,0 +1,37 @@
+/* Checkbox animations and transitions */
+
+/* Ensure checkbox is square with proper border radius */
+button[role="checkbox"] {
+  border-radius: 0.25rem; /* 4px - standard checkbox radius */
+}
+
+@keyframes checkboxFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes checkboxFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+[data-state="checked"] svg,
+[data-state="indeterminate"] svg {
+  animation: checkboxFadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-state="unchecked"] svg {
+  animation: checkboxFadeOut 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}

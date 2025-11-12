@@ -1,8 +1,9 @@
 use dioxus::prelude::*;
 use dioxus_components::{
     Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionType, Avatar,
-    AvatarFallback, AvatarImage, Badge, BadgeVariant, Button, ButtonVariant, Spinner, SpinnerSize,
-    Tooltip, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,
+    AvatarFallback, AvatarImage, Badge, BadgeVariant, Button, ButtonVariant, Checkbox,
+    CheckboxIndicator, CheckboxLabel, CheckboxProvider, CheckboxTrigger, CheckedState, Spinner,
+    SpinnerSize, Tooltip, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,
 };
 
 #[derive(Debug, Clone, Routable, PartialEq)]
@@ -132,6 +133,158 @@ fn Home() -> Element {
                             color: "text-primary-foreground"
                         }
                         "Loading..."
+                    }
+                }
+            }
+
+            // Checkbox Examples
+            div {
+                class: "w-full max-w-2xl space-y-4",
+                h2 { class: "text-2xl font-bold text-center", "Checkbox Examples:" }
+
+                div {
+                    class: "space-y-4 p-6 border rounded-lg bg-card",
+
+                    // Provider pattern (Radix UI style)
+                    div {
+                        class: "flex items-center gap-2",
+                        h3 { class: "text-sm font-semibold mb-2 w-full", "Provider Pattern:" }
+                    }
+                    div {
+                        class: "flex items-center gap-2",
+                        CheckboxProvider {
+                            default_checked: CheckedState::Unchecked,
+                            name: Some("provider_example".to_string()),
+                            CheckboxTrigger {
+                                id: Some("provider".to_string()),
+                                CheckboxIndicator {}
+                            }
+                        }
+                        CheckboxLabel {
+                            for_id: Some("provider".to_string()),
+                            "Provider + Trigger + Indicator"
+                        }
+                    }
+
+                    // Convenience component (backward compatible)
+                    div {
+                        class: "flex items-center gap-2 mt-4",
+                        h3 { class: "text-sm font-semibold mb-2 w-full", "Convenience Component:" }
+                    }
+                    div {
+                        class: "flex items-center gap-2",
+                        Checkbox {
+                            default_checked: CheckedState::Checked,
+                            id: Some("convenience".to_string()),
+                            CheckboxIndicator {}
+                        }
+                        CheckboxLabel {
+                            for_id: Some("convenience".to_string()),
+                            "Pre-checked checkbox"
+                        }
+                    }
+
+                    // Indeterminate state
+                    div {
+                        class: "flex items-center gap-2 mt-4",
+                        h3 { class: "text-sm font-semibold mb-2 w-full", "Indeterminate State:" }
+                    }
+                    div {
+                        class: "flex items-center gap-2",
+                        Checkbox {
+                            default_checked: CheckedState::Indeterminate,
+                            id: Some("indeterminate".to_string()),
+                            CheckboxIndicator {}
+                        }
+                        CheckboxLabel {
+                            for_id: Some("indeterminate".to_string()),
+                            "Mixed selection state"
+                        }
+                    }
+
+                    // Disabled states
+                    div {
+                        class: "flex items-center gap-2 mt-4",
+                        h3 { class: "text-sm font-semibold mb-2 w-full", "Disabled:" }
+                    }
+                    div {
+                        class: "flex gap-4",
+                        div {
+                            class: "flex items-center gap-2",
+                            Checkbox {
+                                default_checked: CheckedState::Checked,
+                                disabled: true,
+                                id: Some("disabled_checked".to_string()),
+                                CheckboxIndicator {}
+                            }
+                            CheckboxLabel {
+                                for_id: Some("disabled_checked".to_string()),
+                                class: Some("opacity-50".to_string()),
+                                "Disabled checked"
+                            }
+                        }
+                        div {
+                            class: "flex items-center gap-2",
+                            Checkbox {
+                                default_checked: CheckedState::Unchecked,
+                                disabled: true,
+                                id: Some("disabled_unchecked".to_string()),
+                                CheckboxIndicator {}
+                            }
+                            CheckboxLabel {
+                                for_id: Some("disabled_unchecked".to_string()),
+                                class: Some("opacity-50".to_string()),
+                                "Disabled unchecked"
+                            }
+                        }
+                    }
+
+                    // Form integration
+                    div {
+                        class: "flex items-center gap-2 mt-4",
+                        h3 { class: "text-sm font-semibold mb-2 w-full", "Form Integration:" }
+                    }
+                    form {
+                        id: "demo_form",
+                        class: "space-y-2",
+                        onsubmit: move |evt| {
+                            evt.prevent_default();
+                        },
+
+                        div {
+                            class: "flex items-center gap-2",
+                            Checkbox {
+                                name: Some("terms".to_string()),
+                                form: Some("demo_form".to_string()),
+                                required: true,
+                                id: Some("terms".to_string()),
+                                CheckboxIndicator {}
+                            }
+                            CheckboxLabel {
+                                for_id: Some("terms".to_string()),
+                                "I accept the terms *"
+                            }
+                        }
+                        div {
+                            class: "flex items-center gap-2",
+                            Checkbox {
+                                name: Some("newsletter".to_string()),
+                                form: Some("demo_form".to_string()),
+                                value: "yes".to_string(),
+                                id: Some("newsletter".to_string()),
+                                CheckboxIndicator {}
+                            }
+                            CheckboxLabel {
+                                for_id: Some("newsletter".to_string()),
+                                "Subscribe to newsletter"
+                            }
+                        }
+
+                        button {
+                            r#type: "submit",
+                            class: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 mt-2",
+                            "Submit Form"
+                        }
                     }
                 }
             }
