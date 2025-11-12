@@ -29,6 +29,8 @@
 use crate::utils;
 use dioxus::prelude::*;
 
+const TOOLTIP_CSS: &str = include_str!("./tooltip.css");
+
 const DEFAULT_DELAY_DURATION: u64 = 400;
 const SKIP_DELAY_DURATION: u64 = 300;
 
@@ -67,7 +69,10 @@ pub fn TooltipProvider(props: TooltipProviderProps) -> Element {
         disable_hoverable_content: props.disable_hoverable_content,
     });
 
-    rsx! { {props.children} }
+    rsx! {
+        style { {TOOLTIP_CSS} }
+        {props.children}
+    }
 }
 
 #[derive(Clone, Copy)]

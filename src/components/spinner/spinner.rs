@@ -23,6 +23,8 @@
 use crate::utils;
 use dioxus::prelude::*;
 
+const SPINNER_CSS: &str = include_str!("./spinner.css");
+
 #[derive(Clone, Copy, PartialEq)]
 pub enum SpinnerSize {
     Small,  // size-4 (16px)
@@ -69,6 +71,7 @@ pub fn Spinner(props: SpinnerProps) -> Element {
     ]);
 
     rsx! {
+        style { {SPINNER_CSS} }
         svg {
             role: "status",
             "aria-label": "Loading",

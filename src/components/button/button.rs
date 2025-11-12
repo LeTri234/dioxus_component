@@ -2,6 +2,8 @@ use dioxus::prelude::*;
 
 use crate::utils;
 
+const BUTTON_CSS: &str = include_str!("./button.css");
+
 #[derive(Clone, Copy, PartialEq)]
 pub enum ButtonVariant {
     Default,
@@ -100,6 +102,7 @@ pub fn Button(props: ButtonProps) -> Element {
 
     match tag {
         "a" => rsx! {
+            style { {BUTTON_CSS} }
             a {
                 class: "{class_name}",
                 href: props.href.as_deref().unwrap_or("#"),
@@ -113,6 +116,7 @@ pub fn Button(props: ButtonProps) -> Element {
             }
         },
         "div" => rsx! {
+            style { {BUTTON_CSS} }
             div {
                 class: "{class_name}",
                 onclick: move |e| { if let Some(handler) = &props.onclick { handler.call(e); } },
@@ -121,6 +125,7 @@ pub fn Button(props: ButtonProps) -> Element {
             }
         },
         "span" => rsx! {
+            style { {BUTTON_CSS} }
             span {
                 class: "{class_name}",
                 onclick: move |e| { if let Some(handler) = &props.onclick { handler.call(e); } },
@@ -129,6 +134,7 @@ pub fn Button(props: ButtonProps) -> Element {
             }
         },
         _ => rsx!(
+            style { {BUTTON_CSS} }
             button {
                 class: "{class_name}",
                 disabled: "{props.disabled.unwrap_or(false)}",

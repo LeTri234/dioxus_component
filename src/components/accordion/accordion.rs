@@ -35,6 +35,9 @@
 use crate::utils;
 use dioxus::prelude::*;
 
+// Import component CSS
+const ACCORDION_CSS: &str = include_str!("./accordion.css");
+
 /* -------------------------------------------------------------------------------------------------
  * Accordion Types
  * -----------------------------------------------------------------------------------------------*/
@@ -121,6 +124,9 @@ pub fn Accordion(props: AccordionProps) -> Element {
     });
 
     rsx! {
+        // Inject component styles
+        style { {ACCORDION_CSS} }
+
         div {
             class: if let Some(cls) = props.class.as_ref() { cls.as_str() } else { "" },
             "data-orientation": "{props.orientation.as_str()}",

@@ -33,6 +33,8 @@
 use crate::utils;
 use dioxus::prelude::*;
 
+const BADGE_CSS: &str = include_str!("./badge.css");
+
 /* -------------------------------------------------------------------------------------------------
  * Badge Variant
  * -----------------------------------------------------------------------------------------------*/
@@ -100,6 +102,7 @@ pub fn Badge(props: BadgeProps) -> Element {
 
     match tag {
         "a" => rsx! {
+            style { {BADGE_CSS} }
             a {
                 class: "{class_name}",
                 href: props.href.as_deref().unwrap_or("#"),
@@ -112,6 +115,7 @@ pub fn Badge(props: BadgeProps) -> Element {
             }
         },
         "button" => rsx! {
+            style { {BADGE_CSS} }
             button {
                 class: "{class_name}",
                 onclick: move |e| {
@@ -123,6 +127,7 @@ pub fn Badge(props: BadgeProps) -> Element {
             }
         },
         "div" => rsx! {
+            style { {BADGE_CSS} }
             div {
                 class: "{class_name}",
                 onclick: move |e| {
@@ -134,6 +139,7 @@ pub fn Badge(props: BadgeProps) -> Element {
             }
         },
         _ => rsx! {
+            style { {BADGE_CSS} }
             span {
                 class: "{class_name}",
                 onclick: move |e| {

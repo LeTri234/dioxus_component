@@ -28,6 +28,8 @@ use dioxus::prelude::*;
 
 use crate::utils;
 
+const AVATAR_CSS: &str = include_str!("./avatar.css");
+
 /* -------------------------------------------------------------------------------------------------
  * Avatar Context
  * -----------------------------------------------------------------------------------------------*/
@@ -66,6 +68,7 @@ pub fn Avatar(props: AvatarProps) -> Element {
     ]);
 
     rsx! {
+        style { {AVATAR_CSS} }
         span {
             class: "{class_name}",
             {props.children}

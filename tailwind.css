@@ -1,14 +1,6 @@
 @import "tailwindcss";
 @source "./src/**/*.{rs,html,css}";
 
-/* Import component-specific CSS */
-@import "./src/components/tooltip/tooltip.css";
-@import "./src/components/accordion/accordion.css";
-@import "./src/components/avatar/avatar.css";
-@import "./src/components/badge/badge.css";
-@import "./src/components/button/button.css";
-@import "./src/components/spinner/spinner.css";
-
 @theme {
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(222.2 84% 4.9%);
