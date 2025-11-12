@@ -7,3 +7,7 @@
 **/*.rs.bk
 
 node_modules
+
+# Dioxus build output
+dist/
+.vercel

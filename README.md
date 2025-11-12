@@ -100,6 +100,28 @@ dx serve --example demo
 
 This will start a development server with hot reloading and open the demo in your browser.
 
+## Deploy to Vercel
+
+Deploy the demo to Vercel in 3 steps:
+
+1. **Push to GitHub:**
+
+   ```bash
+   git push origin main
+   ```
+
+2. **Import to Vercel:**
+
+   - Go to [vercel.com/new](https://vercel.com/new)
+   - Import your repository
+   - Vercel will auto-detect `vercel.json`
+
+3. **Deploy:**
+   - Click "Deploy" and wait ~5-10 minutes
+   - Your demo will be live at `https://your-project.vercel.app`
+
+See `DEPLOYMENT.md` for detailed deployment instructions and alternative methods.
+
 ## Project Structure
 
 ```
