@@ -9,6 +9,7 @@
 //! - **Avatar** - User avatar display with image loading and fallback support
 //! - **Badge** - Flexible badge component with multiple style variants
 //! - **Button** - Versatile button with 6 variants and 6 size options
+//! - **Portal** - Render content outside the parent DOM hierarchy (modals, overlays)
 //! - **Spinner** - Loading indicator with multiple sizes and colors
 //! - **Tooltip** - Hover-triggered tooltips with flexible positioning
 //!
@@ -69,6 +70,7 @@ pub use components::{
         Checkbox, CheckboxBubbleInput, CheckboxContext, CheckboxIndicator, CheckboxLabel,
         CheckboxProvider, CheckboxTrigger, CheckedState,
     },
+    portal::Portal,
     spinner::{Spinner, SpinnerSize},
     tooltip::{
         Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,
