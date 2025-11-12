@@ -1287,6 +1287,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "dioxus_components"
+version = "0.1.0"
+dependencies = [
+ "dioxus",
+ "gloo-timers",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
 name = "dirs"
 version = "6.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1544,16 +1554,6 @@ name = "find-msvc-tools"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "52051878f80a721bb68ebfbc930e07b65ba72f2da88968ea5c06fd6ca3d3a127"
-
-[[package]]
-name = "first_dioxus"
-version = "0.1.0"
-dependencies = [
- "dioxus",
- "gloo-timers",
- "wasm-bindgen",
- "web-sys",
-]
 
 [[package]]
 name = "flate2"
