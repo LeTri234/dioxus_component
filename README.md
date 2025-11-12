@@ -8,12 +8,13 @@ A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind
 
 ## Features
 
-✨ **7 High-Quality Components**
+✨ **8 High-Quality Components**
 
 - 🎯 **Accordion** - Collapsible sections with single/multiple modes
 - 👤 **Avatar** - User avatars with image loading and fallback support
 - 🏷️ **Badge** - Flexible badges with 4 style variants
 - 🔘 **Button** - Versatile buttons with 6 variants and 6 sizes
+- 💬 **Dialog** - Accessible modal dialogs with overlay and keyboard handling
 - 🌀 **Portal** - Render content outside the parent DOM hierarchy
 - ⏳ **Spinner** - Loading indicators with multiple sizes and colors
 - 💬 **Tooltip** - Hover-triggered tooltips with flexible positioning
@@ -80,9 +81,10 @@ fn App() -> Element {
 2. **Avatar** - User avatars with image loading and fallback
 3. **Badge** - Small decorative labels with 4 variants
 4. **Button** - Versatile buttons with 6 variants and 6 sizes
-5. **Portal** - Render content to different DOM locations (modals, overlays)
-6. **Spinner** - Loading indicators with multiple sizes
-7. **Tooltip** - Hover-triggered tooltips with positioning
+5. **Dialog** - Modal dialogs with overlay, focus management, and keyboard controls
+6. **Portal** - Render content to different DOM locations (modals, overlays)
+7. **Spinner** - Loading indicators with multiple sizes
+8. **Tooltip** - Hover-triggered tooltips with positioning
 
 See `COMPONENTS.md` for detailed documentation and API references for all components.
 
@@ -134,7 +136,8 @@ src/
 │   ├── avatar/
 │   ├── badge/
 │   ├── button/
-│   ├── portal/           # NEW: Portal component
+│   ├── dialog/           # NEW: Dialog component
+│   ├── portal/
 │   ├── spinner/
 │   └── tooltip/
 └── utils/                 # Utility functions
