@@ -2,8 +2,10 @@ use dioxus::prelude::*;
 use dioxus_components::{
     Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionType, Avatar,
     AvatarFallback, AvatarImage, Badge, BadgeVariant, Button, ButtonVariant, Checkbox,
-    CheckboxIndicator, CheckboxLabel, CheckboxProvider, CheckboxTrigger, CheckedState, Portal,
-    Spinner, SpinnerSize, Tooltip, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,
+    CheckboxIndicator, CheckboxLabel, CheckboxProvider, CheckboxTrigger, CheckedState, Dialog,
+    DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogTitle, DialogTrigger,
+    Portal, Spinner, SpinnerSize, Tooltip, TooltipContent, TooltipProvider, TooltipSide,
+    TooltipTrigger,
 };
 
 #[derive(Debug, Clone, Routable, PartialEq)]
@@ -177,6 +179,21 @@ fn Home() -> Element {
                     }
 
                     PortalExample {}
+                }
+            }
+
+            // Dialog Examples
+            div {
+                class: "w-full max-w-2xl space-y-4",
+                h2 { class: "text-2xl font-bold text-center", "Dialog Examples:" }
+
+                div {
+                    class: "space-y-4 p-6 border rounded-lg bg-card",
+                    p { class: "text-sm text-muted-foreground mb-4",
+                        "Dialog (Modal) - Accessible dialog components with overlay, focus trap, and keyboard handling."
+                    }
+
+                    DialogExample {}
                 }
             }
 
@@ -556,5 +573,170 @@ fn Navbar() -> Element {
         }
 
         Outlet::<Route> {}
+    }
+}
+
+/// Example showcasing Dialog component
+#[component]
+fn DialogExample() -> Element {
+    rsx! {
+        div {
+            class: "space-y-4",
+
+            // Basic Dialog Example
+            div {
+                h3 { class: "text-sm font-semibold mb-2", "Basic Dialog:" }
+                Dialog {
+                    default_open: false,
+                    modal: true,
+                    DialogTrigger {
+                        class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4",
+                        "Open Dialog"
+                    }
+                    DialogOverlay {
+                        class: "dialog-overlay"
+                    }
+                    DialogContent {
+                        class: "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background p-6 shadow-lg rounded-lg border max-w-lg w-full",
+                        container: "body".to_string(),
+                        close_on_outside_click: true,
+                        close_on_escape: true,
+                        DialogTitle {
+                            class: "text-lg font-semibold mb-2",
+                            "Dialog Title"
+                        }
+                        DialogDescription {
+                            class: "text-sm text-muted-foreground mb-4",
+                            "This is a dialog description. It provides additional context about the dialog content."
+                        }
+                        div {
+                            class: "space-y-4",
+                            p {
+                                class: "text-sm",
+                                "This dialog demonstrates the Dialog component with:"
+                            }
+                            ul {
+                                class: "list-disc list-inside text-sm space-y-1 ml-2",
+                                li { "Modal overlay that blocks interaction" }
+                                li { "Click outside to close" }
+                                li { "Press Escape to close" }
+                                li { "Accessible with ARIA attributes" }
+                                li { "Uses Portal for rendering" }
+                            }
+                        }
+                        div {
+                            class: "flex justify-end gap-2 mt-6",
+                            DialogClose {
+                                class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4",
+                                "Cancel"
+                            }
+                            DialogClose {
+                                class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4",
+                                "Confirm"
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Alert Dialog Example
+            div {
+                h3 { class: "text-sm font-semibold mb-2", "Alert Dialog:" }
+                Dialog {
+                    default_open: false,
+                    modal: true,
+                    DialogTrigger {
+                        class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 py-2 px-4",
+                        "Delete Account"
+                    }
+                    DialogOverlay {}
+                    DialogContent {
+                        class: "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background p-6 shadow-lg rounded-lg border max-w-md w-full",
+                        DialogTitle {
+                            class: "text-lg font-semibold mb-2 text-destructive",
+                            "⚠️ Are you absolutely sure?"
+                        }
+                        DialogDescription {
+                            class: "text-sm text-muted-foreground mb-4",
+                            "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
+                        }
+                        div {
+                            class: "flex justify-end gap-2 mt-6",
+                            DialogClose {
+                                class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4",
+                                "Cancel"
+                            }
+                            DialogClose {
+                                class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 py-2 px-4",
+                                "Delete Account"
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Form Dialog Example
+            div {
+                h3 { class: "text-sm font-semibold mb-2", "Form Dialog:" }
+                Dialog {
+                    default_open: false,
+                    modal: true,
+                    DialogTrigger {
+                        class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4",
+                        "Edit Profile"
+                    }
+                    DialogOverlay {}
+                    DialogContent {
+                        class: "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background p-6 shadow-lg rounded-lg border max-w-md w-full",
+                        DialogTitle {
+                            class: "text-lg font-semibold mb-2",
+                            "Edit Profile"
+                        }
+                        DialogDescription {
+                            class: "text-sm text-muted-foreground mb-4",
+                            "Make changes to your profile here. Click save when you're done."
+                        }
+                        div {
+                            class: "space-y-4",
+                            div {
+                                class: "space-y-2",
+                                label {
+                                    class: "text-sm font-medium",
+                                    "Name"
+                                }
+                                input {
+                                    class: "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                                    r#type: "text",
+                                    placeholder: "Enter your name"
+                                }
+                            }
+                            div {
+                                class: "space-y-2",
+                                label {
+                                    class: "text-sm font-medium",
+                                    "Username"
+                                }
+                                input {
+                                    class: "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                                    r#type: "text",
+                                    placeholder: "@username"
+                                }
+                            }
+                        }
+                        div {
+                            class: "flex justify-end gap-2 mt-6",
+                            DialogClose {
+                                class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4",
+                                "Cancel"
+                            }
+                            DialogClose {
+                                class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4",
+                                "Save Changes"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

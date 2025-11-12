@@ -9,9 +9,10 @@ A comprehensive guide to using the Dioxus 0.7 component library. All components 
 3. [Badge](#badge)
 4. [Button](#button)
 5. [Checkbox](#checkbox)
-6. [Portal](#portal)
-7. [Spinner](#spinner)
-8. [Tooltip](#tooltip)
+6. [Dialog](#dialog)
+7. [Portal](#portal)
+8. [Spinner](#spinner)
+9. [Tooltip](#tooltip)
 
 ---
 
@@ -788,6 +789,377 @@ Keep the indicator mounted even when unchecked (useful for animations):
 CheckboxIndicator {
     force_mount: true,
     // Indicator always rendered, visibility controlled by CSS
+}
+```
+
+---
+
+## Dialog
+
+A fully accessible modal dialog component that follows WAI-ARIA design patterns. Features include modal overlays, focus management, keyboard controls (Escape to close), and backdrop click handling.
+
+### Basic Usage
+
+```rust
+use dioxus::prelude::*;
+use dioxus_components::{
+    Dialog, DialogTrigger, DialogOverlay, DialogContent,
+    DialogTitle, DialogDescription, DialogClose
+};
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        Dialog {
+            default_open: false,
+            modal: true,
+            DialogTrigger {
+                class: "btn btn-primary",
+                "Open Dialog"
+            }
+            DialogOverlay {}
+            DialogContent {
+                class: "dialog-content",
+                DialogTitle {
+                    class: "text-lg font-bold",
+                    "Dialog Title"
+                }
+                DialogDescription {
+                    class: "text-sm text-gray-600",
+                    "This is a description of the dialog content."
+                }
+                div {
+                    class: "space-y-4",
+                    p { "Dialog body content goes here." }
+                }
+                div {
+                    class: "flex justify-end gap-2",
+                    DialogClose {
+                        class: "btn btn-secondary",
+                        "Cancel"
+                    }
+                    DialogClose {
+                        class: "btn btn-primary",
+                        "Confirm"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Props
+
+#### Dialog (Root Component)
+
+| Prop             | Type                         | Default  | Description                                                |
+| ---------------- | ---------------------------- | -------- | ---------------------------------------------------------- |
+| `open`           | `Option<bool>`               | `None`   | Controlled open state (when provided, makes it controlled) |
+| `default_open`   | `bool`                       | `false`  | Whether the dialog is initially open (uncontrolled mode)   |
+| `on_open_change` | `Option<EventHandler<bool>>` | `None`   | Callback when open state changes                           |
+| `modal`          | `bool`                       | `true`   | If true, shows overlay, traps focus, and locks body scroll |
+| `children`       | `Element`                    | required | Child components (Trigger, Overlay, Content)               |
+
+**Controlled vs Uncontrolled:**
+
+- **Uncontrolled**: Only provide `default_open` (component manages state internally)
+- **Controlled**: Provide `open` and `on_open_change` (you manage state externally)
+
+#### DialogTrigger
+
+| Prop         | Type             | Default  | Description              |
+| ------------ | ---------------- | -------- | ------------------------ |
+| `attributes` | `Vec<Attribute>` | `[]`     | Standard HTML attributes |
+| `children`   | `Element`        | required | Button content           |
+
+Automatically receives proper ARIA attributes:
+
+- `aria-haspopup="dialog"`
+- `aria-expanded` (true/false)
+- `aria-controls` (links to content ID)
+- `data-state` (open/closed)
+
+#### DialogOverlay
+
+| Prop         | Type             | Default  | Description              |
+| ------------ | ---------------- | -------- | ------------------------ |
+| `class`      | `String`         | `""`     | Additional CSS classes   |
+| `attributes` | `Vec<Attribute>` | `[]`     | Standard HTML attributes |
+| `children`   | `Element`        | optional | Custom overlay content   |
+
+Default styling: Fixed position with dark semi-transparent background.
+
+#### DialogContent
+
+| Prop                     | Type             | Default  | Description                    |
+| ------------------------ | ---------------- | -------- | ------------------------------ |
+| `class`                  | `String`         | `""`     | Additional CSS classes         |
+| `container`              | `String`         | `"body"` | CSS selector for portal target |
+| `close_on_outside_click` | `bool`           | `true`   | Close when clicking backdrop   |
+| `close_on_escape`        | `bool`           | `true`   | Close when pressing Escape key |
+| `attributes`             | `Vec<Attribute>` | `[]`     | Standard HTML attributes       |
+| `children`               | `Element`        | required | Dialog content                 |
+
+Automatically receives ARIA attributes:
+
+- `role="dialog"`
+- `aria-modal` (true for modal dialogs)
+- `aria-labelledby` (references title)
+- `aria-describedby` (references description)
+
+#### DialogTitle
+
+| Prop         | Type             | Default  | Description              |
+| ------------ | ---------------- | -------- | ------------------------ |
+| `class`      | `String`         | `""`     | Additional CSS classes   |
+| `attributes` | `Vec<Attribute>` | `[]`     | Standard HTML attributes |
+| `children`   | `Element`        | required | Title text               |
+
+Renders as `<h2>` element with unique ID for accessibility.
+
+#### DialogDescription
+
+| Prop         | Type             | Default  | Description              |
+| ------------ | ---------------- | -------- | ------------------------ |
+| `class`      | `String`         | `""`     | Additional CSS classes   |
+| `attributes` | `Vec<Attribute>` | `[]`     | Standard HTML attributes |
+| `children`   | `Element`        | required | Description text         |
+
+Renders as `<p>` element with unique ID for accessibility.
+
+#### DialogClose
+
+| Prop         | Type             | Default  | Description              |
+| ------------ | ---------------- | -------- | ------------------------ |
+| `attributes` | `Vec<Attribute>` | `[]`     | Standard HTML attributes |
+| `children`   | `Element`        | required | Button content           |
+
+Closes the dialog when clicked.
+
+### Alert Dialog Example
+
+```rust
+#[component]
+fn DeleteConfirmation() -> Element {
+    rsx! {
+        Dialog {
+            modal: true,
+            DialogTrigger {
+                class: "btn btn-destructive",
+                "Delete Account"
+            }
+            DialogOverlay {}
+            DialogContent {
+                class: "max-w-md",
+                DialogTitle {
+                    class: "text-red-600 font-bold",
+                    "⚠️ Are you absolutely sure?"
+                }
+                DialogDescription {
+                    "This action cannot be undone. This will permanently "
+                    "delete your account and remove your data from our servers."
+                }
+                div {
+                    class: "flex justify-end gap-2 mt-6",
+                    DialogClose {
+                        class: "btn btn-secondary",
+                        "Cancel"
+                    }
+                    DialogClose {
+                        class: "btn btn-destructive",
+                        "Delete Account"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Form Dialog Example
+
+```rust
+#[component]
+fn EditProfile() -> Element {
+    rsx! {
+        Dialog {
+            DialogTrigger {
+                class: "btn btn-primary",
+                "Edit Profile"
+            }
+            DialogOverlay {}
+            DialogContent {
+                DialogTitle { "Edit Profile" }
+                DialogDescription {
+                    "Make changes to your profile here. Click save when you're done."
+                }
+                div {
+                    class: "space-y-4 my-4",
+                    div {
+                        label {
+                            class: "block text-sm font-medium mb-1",
+                            "Name"
+                        }
+                        input {
+                            class: "input",
+                            r#type: "text",
+                            placeholder: "Enter your name"
+                        }
+                    }
+                    div {
+                        label {
+                            class: "block text-sm font-medium mb-1",
+                            "Email"
+                        }
+                        input {
+                            class: "input",
+                            r#type: "email",
+                            placeholder: "email@example.com"
+                        }
+                    }
+                }
+                div {
+                    class: "flex justify-end gap-2",
+                    DialogClose {
+                        class: "btn btn-secondary",
+                        "Cancel"
+                    }
+                    DialogClose {
+                        class: "btn btn-primary",
+                        "Save Changes"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Features
+
+- ✅ **Modal & Non-Modal Support**: Full modal with overlay and focus trap, or non-modal mode
+- ✅ **Focus Trap**: Automatically traps focus within modal dialogs using Tab key handling
+- ✅ **Body Scroll Lock**: Prevents scrolling outside modal when open (with layout shift prevention)
+- ✅ **Controlled/Uncontrolled**: Can be controlled externally or manage state internally
+- ✅ **Keyboard Controls**: Escape key to close with proper cleanup (configurable)
+- ✅ **Click Outside**: Backdrop click to close (configurable)
+- ✅ **Portal Rendering**: Uses Portal component to render outside parent DOM
+- ✅ **Screen Reader Announcements**: Proper ARIA labeling with Title and Description
+- ✅ **Accessibility**: Full WAI-ARIA dialog pattern implementation
+- ✅ **Context API**: Shared state between all dialog components
+- ✅ **Auto Focus**: Automatically focuses first focusable element on open
+- ✅ **State Callbacks**: `on_open_change` for reacting to state changes
+
+### Use Cases
+
+1. **Confirmation Dialogs** - Delete confirmations, logout prompts
+2. **Forms** - Edit profile, settings, data entry
+3. **Alerts** - Important notifications requiring acknowledgment
+4. **Media Viewers** - Image galleries, video players
+5. **Complex Interactions** - Multi-step wizards, detailed views
+
+### Implementation Details
+
+The Dialog component uses:
+
+- **Context API** to share state between trigger, content, and close buttons
+- **Portal component** to render content at the document root
+- **JavaScript event listeners** for Escape key handling
+- **Signal** for reactive open/closed state
+- **Memos** for generating unique ARIA IDs
+- **Scrollbar width compensation** to prevent layout shift when locking scroll
+
+**Scroll Lock Implementation:**
+When a modal dialog opens, the component:
+
+1. Calculates the scrollbar width (`window.innerWidth - document.documentElement.clientWidth`)
+2. Sets `overflow: hidden` on the body
+3. Adds `padding-right` equal to scrollbar width to prevent layout shift
+4. Stores original values for restoration
+5. Restores everything when dialog closes
+
+This ensures the page content doesn't shift horizontally when the scrollbar disappears.
+
+The component is split into composable parts following the Radix UI pattern:
+
+- `Dialog` - Root provider with state management
+- `DialogTrigger` - Button to open dialog
+- `DialogOverlay` - Semi-transparent backdrop (modal only)
+- `DialogContent` - Main container with Portal
+- `DialogTitle` - Accessible title (required)
+- `DialogDescription` - Accessible description (recommended)
+- `DialogClose` - Button(s) to close dialog
+
+### Best Practices
+
+1. **Always include DialogTitle** for screen reader users
+2. **Add DialogDescription** for context
+3. **Use semantic button text** ("Delete", not "Yes")
+4. **Consider close_on_outside_click** based on context
+5. **Test keyboard navigation** (Tab, Escape)
+6. **Style focus indicators** for accessibility
+7. **Use appropriate variants** (destructive for delete actions)
+8. **Keep content concise** in alert dialogs
+9. **Validate forms** before allowing dialog close
+10. **Provide clear actions** (primary vs secondary buttons)
+
+### Accessibility
+
+- ✅ **WAI-ARIA Dialog Pattern** compliant
+- ✅ `role="dialog"` on content
+- ✅ `aria-modal="true"` for modal dialogs
+- ✅ `aria-labelledby` references title
+- ✅ `aria-describedby` references description
+- ✅ Keyboard support (Escape to close)
+- ✅ Focus management (stays within dialog)
+- ✅ Screen reader announcements
+- ✅ Backdrop click handling
+
+### Styling Recommendations
+
+```css
+/* Base dialog content styles */
+.dialog-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+/* Overlay/backdrop */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  animation: fadeIn 150ms ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .dialog-content {
+    background: #1f2937;
+    color: white;
+  }
 }
 ```
 
