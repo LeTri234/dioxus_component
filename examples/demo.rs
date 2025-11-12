@@ -2,8 +2,8 @@ use dioxus::prelude::*;
 use dioxus_components::{
     Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionType, Avatar,
     AvatarFallback, AvatarImage, Badge, BadgeVariant, Button, ButtonVariant, Checkbox,
-    CheckboxIndicator, CheckboxLabel, CheckboxProvider, CheckboxTrigger, CheckedState, Spinner,
-    SpinnerSize, Tooltip, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,
+    CheckboxIndicator, CheckboxLabel, CheckboxProvider, CheckboxTrigger, CheckedState, Portal,
+    Spinner, SpinnerSize, Tooltip, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,
 };
 
 #[derive(Debug, Clone, Routable, PartialEq)]
@@ -162,6 +162,21 @@ fn Home() -> Element {
                         }
                         "Loading..."
                     }
+                }
+            }
+
+            // Portal Examples
+            div {
+                class: "w-full max-w-2xl space-y-4",
+                h2 { class: "text-2xl font-bold text-center", "Portal Examples:" }
+
+                div {
+                    class: "space-y-4 p-6 border rounded-lg bg-card",
+                    p { class: "text-sm text-muted-foreground mb-4",
+                        "Portal renders content with fixed positioning, appearing above other content."
+                    }
+
+                    PortalExample {}
                 }
             }
 
@@ -449,6 +464,53 @@ fn Home() -> Element {
             }
         }
 
+    }
+}
+
+/// Portal Example Component
+#[component]
+fn PortalExample() -> Element {
+    let mut show_portal = use_signal(|| false);
+
+    rsx! {
+        div {
+            class: "space-y-4",
+
+            Button {
+                variant: ButtonVariant::Default,
+                onclick: move |_| show_portal.set(!show_portal()),
+                if show_portal() {
+                    "Hide Portal"
+                } else {
+                    "Show Portal"
+                }
+            }
+
+            // Portal content
+            if show_portal() {
+                Portal {
+                    container: "main",
+                    class: "portal-overlay",
+                    div {
+                        class: "fixed inset-0 bg-black/50 flex items-center justify-center",
+                        onclick: move |_| show_portal.set(false),
+                        div {
+                            class: "bg-card p-8 rounded-lg shadow-lg max-w-md",
+                            onclick: move |e| e.stop_propagation(),
+                            h3 { class: "text-xl font-bold mb-4", "Portal Content" }
+                            p { class: "mb-4 text-muted-foreground",
+                                "This content is rendered using a Portal component. It appears with fixed positioning above other content."
+                            }
+                            Button {
+                                variant: ButtonVariant::Destructive,
+                                onclick: move |_| show_portal.set(false),
+                                "Close"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

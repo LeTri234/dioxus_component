@@ -8,12 +8,13 @@ A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind
 
 ## Features
 
-✨ **6 High-Quality Components**
+✨ **7 High-Quality Components**
 
 - 🎯 **Accordion** - Collapsible sections with single/multiple modes
 - 👤 **Avatar** - User avatars with image loading and fallback support
 - 🏷️ **Badge** - Flexible badges with 4 style variants
 - 🔘 **Button** - Versatile buttons with 6 variants and 6 sizes
+- 🌀 **Portal** - Render content outside the parent DOM hierarchy
 - ⏳ **Spinner** - Loading indicators with multiple sizes and colors
 - 💬 **Tooltip** - Hover-triggered tooltips with flexible positioning
 
@@ -79,8 +80,9 @@ fn App() -> Element {
 2. **Avatar** - User avatars with image loading and fallback
 3. **Badge** - Small decorative labels with 4 variants
 4. **Button** - Versatile buttons with 6 variants and 6 sizes
-5. **Spinner** - Loading indicators with multiple sizes
-6. **Tooltip** - Hover-triggered tooltips with positioning
+5. **Portal** - Render content to different DOM locations (modals, overlays)
+6. **Spinner** - Loading indicators with multiple sizes
+7. **Tooltip** - Hover-triggered tooltips with positioning
 
 See `COMPONENTS.md` for detailed documentation and API references for all components.
 
@@ -124,7 +126,7 @@ See `DEPLOYMENT.md` for detailed deployment instructions and alternative methods
 
 ## Project Structure
 
-```
+```text
 src/
 ├── lib.rs                 # Library entry point
 ├── components/            # All reusable components
@@ -132,6 +134,7 @@ src/
 │   ├── avatar/
 │   ├── badge/
 │   ├── button/
+│   ├── portal/           # NEW: Portal component
 │   ├── spinner/
 │   └── tooltip/
 └── utils/                 # Utility functions
@@ -160,6 +163,7 @@ pub use dioxus_components::{
     Avatar, AvatarImage, AvatarFallback,
     Badge, BadgeVariant,
     Button, ButtonVariant, ButtonSize,
+    Portal, // NEW: Portal component
     Spinner, SpinnerSize,
     Tooltip, TooltipTrigger, TooltipContent, TooltipProvider,
     cn, // utility function
@@ -237,7 +241,7 @@ MIT
 ### v0.1.0 - Published 🎉
 
 - ✅ Initial release on crates.io
-- ✅ 6 core components (Accordion, Avatar, Badge, Button, Spinner, Tooltip)
+- ✅ 7 core components (Accordion, Avatar, Badge, Button, Portal, Spinner, Tooltip)
 - ✅ Tailwind CSS v4 integration
 - ✅ Full WAI-ARIA compliance
 - ✅ Dark mode support

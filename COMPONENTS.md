@@ -9,8 +9,9 @@ A comprehensive guide to using the Dioxus 0.7 component library. All components 
 3. [Badge](#badge)
 4. [Button](#button)
 5. [Checkbox](#checkbox)
-6. [Spinner](#spinner)
-7. [Tooltip](#tooltip)
+6. [Portal](#portal)
+7. [Spinner](#spinner)
+8. [Tooltip](#tooltip)
 
 ---
 
@@ -789,6 +790,152 @@ CheckboxIndicator {
     // Indicator always rendered, visibility controlled by CSS
 }
 ```
+
+---
+
+## Portal
+
+A Portal component that renders children into a different part of the DOM tree, equivalent to React's `ReactDOM.createPortal`. This is useful for modals, overlays, and tooltips that need to break out of their parent container's DOM hierarchy.
+
+### Basic Usage
+
+```rust
+use dioxus::prelude::*;
+use dioxus_components::Portal;
+
+#[component]
+fn App() -> Element {
+    let mut show_modal = use_signal(|| false);
+
+    rsx! {
+        div {
+            button {
+                onclick: move |_| show_modal.set(true),
+                "Show Modal"
+            }
+
+            if show_modal() {
+                Portal {
+                    container: "body",
+                    class: "modal-overlay",
+                    div {
+                        class: "fixed inset-0 bg-black/50 flex items-center justify-center",
+                        onclick: move |_| show_modal.set(false),
+                        div {
+                            class: "bg-white p-6 rounded-lg",
+                            onclick: move |e| e.stop_propagation(),
+                            h2 { "Modal Title" }
+                            p { "This content is rendered in document.body!" }
+                            button {
+                                onclick: move |_| show_modal.set(false),
+                                "Close"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Props
+
+| Prop        | Type             | Default  | Description                                                         |
+| ----------- | ---------------- | -------- | ------------------------------------------------------------------- |
+| `container` | `String`         | `"body"` | CSS selector for target container (e.g., "body", "#root", ".modal") |
+| `class`     | `Option<String>` | `None`   | Additional CSS classes for the portal wrapper                       |
+| `id`        | `Option<String>` | `None`   | ID attribute for the portal wrapper                                 |
+
+### Features
+
+- **DOM Manipulation**: Uses JavaScript to physically move the portal element to the specified container
+- **Client-Side Only**: Renders only after mounting to avoid SSR issues
+- **Flexible Positioning**: Content can be positioned using CSS (typically `fixed` or `absolute`)
+- **Event Handling**: Events bubble normally within the portal content
+- **Multiple Portals**: Can render multiple portals to different containers
+
+### Common Use Cases
+
+#### Modal Dialog
+
+```rust
+Portal {
+    container: "body",
+    div {
+        class: "fixed inset-0 z-50 bg-black/50 flex items-center justify-center",
+        div {
+            class: "bg-card p-6 rounded-lg shadow-xl max-w-md",
+            h2 { class: "text-xl font-bold mb-4", "Confirm Action" }
+            p { class: "mb-4", "Are you sure you want to proceed?" }
+            div {
+                class: "flex gap-2 justify-end",
+                button { "Cancel" }
+                button { "Confirm" }
+            }
+        }
+    }
+}
+```
+
+#### Dropdown Menu
+
+```rust
+Portal {
+    container: "body",
+    div {
+        class: "absolute",
+        style: "top: {y}px; left: {x}px;",
+        div {
+            class: "bg-card border rounded-md shadow-lg p-2",
+            button { class: "w-full text-left px-3 py-2 hover:bg-accent", "Option 1" }
+            button { class: "w-full text-left px-3 py-2 hover:bg-accent", "Option 2" }
+            button { class: "w-full text-left px-3 py-2 hover:bg-accent", "Option 3" }
+        }
+    }
+}
+```
+
+#### Toast Notification
+
+```rust
+Portal {
+    container: "body",
+    div {
+        class: "fixed top-4 right-4 z-50",
+        div {
+            class: "bg-card border rounded-lg shadow-lg p-4 max-w-sm",
+            div { class: "font-semibold", "Notification" }
+            div { class: "text-sm text-muted-foreground", "Action completed successfully!" }
+        }
+    }
+}
+```
+
+### Implementation Details
+
+The Portal component:
+
+1. Generates a unique ID for the portal element
+2. Waits for the component to mount (client-side only)
+3. Uses JavaScript (`onmounted` event) to move the portal element to the target container
+4. The content is physically moved in the DOM tree, not just positioned with CSS
+5. This matches React's `createPortal` behavior exactly
+
+### Best Practices
+
+- Use `container: "body"` for modals and overlays that should appear above all content
+- Add `z-index` classes to ensure proper stacking order
+- Use `fixed` positioning for overlays that cover the viewport
+- Implement click-outside-to-close by adding `onclick` to the overlay with `e.stop_propagation()` on the content
+- Clean up any event listeners when the portal unmounts
+
+### Accessibility
+
+- Ensure keyboard navigation works within the portal
+- Manage focus when opening/closing portals
+- Add ARIA attributes for screen readers (`role`, `aria-modal`, etc.)
+- Trap focus within modals to prevent tabbing to background content
 
 ---
 
