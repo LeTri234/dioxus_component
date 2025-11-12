@@ -68,6 +68,10 @@ pub use components::{
     avatar::{Avatar, AvatarFallback, AvatarImage, ImageLoadingStatus},
     badge::{Badge, BadgeVariant},
     button::{Button, ButtonSize, ButtonVariant},
+    checkbox::{
+        Checkbox, CheckboxBubbleInput, CheckboxContext, CheckboxIndicator, CheckboxLabel,
+        CheckboxProvider, CheckboxTrigger, CheckedState,
+    },
     spinner::{Spinner, SpinnerSize},
     tooltip::{
         Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,

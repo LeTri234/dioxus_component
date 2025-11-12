@@ -8,8 +8,9 @@ A comprehensive guide to using the Dioxus 0.7 component library. All components 
 2. [Avatar](#avatar)
 3. [Badge](#badge)
 4. [Button](#button)
-5. [Spinner](#spinner)
-6. [Tooltip](#tooltip)
+5. [Checkbox](#checkbox)
+6. [Spinner](#spinner)
+7. [Tooltip](#tooltip)
 
 ---
 
@@ -429,6 +430,363 @@ Button {
         // Icon SVG
     }
     "Button with Icon"
+}
+```
+
+---
+
+## Checkbox
+
+A three-state checkbox component with full Radix UI architecture parity. Supports checked, unchecked, and indeterminate states with comprehensive accessibility features.
+
+### Basic Usage
+
+```rust
+use dioxus::prelude::*;
+use crate::components::{Checkbox, CheckboxIndicator, CheckboxLabel, CheckedState};
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        div {
+            class: "flex items-center gap-2",
+            Checkbox {
+                default_checked: CheckedState::Unchecked,
+                id: Some("terms".to_string()),
+                CheckboxIndicator {}
+            }
+            CheckboxLabel {
+                for_id: Some("terms".to_string()),
+                "I accept the terms and conditions"
+            }
+        }
+    }
+}
+```
+
+### Provider Pattern (Radix UI Style)
+
+```rust
+use dioxus::prelude::*;
+use crate::components::{CheckboxProvider, CheckboxTrigger, CheckboxIndicator, CheckedState};
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        CheckboxProvider {
+            default_checked: CheckedState::Unchecked,
+            onchange: move |state| println!("Changed to: {:?}", state),
+            CheckboxTrigger {
+                CheckboxIndicator {}
+            }
+        }
+    }
+}
+```
+
+### Checkbox Props
+
+#### Checkbox (Convenience Component)
+
+| Prop              | Type                                 | Default     | Description                     |
+| ----------------- | ------------------------------------ | ----------- | ------------------------------- |
+| `checked`         | `Option<CheckedState>`               | `None`      | Controlled checked state        |
+| `default_checked` | `CheckedState`                       | `Unchecked` | Initial state when uncontrolled |
+| `onchange`        | `Option<EventHandler<CheckedState>>` | `None`      | Callback when state changes     |
+| `disabled`        | `bool`                               | `false`     | Disable the checkbox            |
+| `required`        | `bool`                               | `false`     | Mark as required field          |
+| `name`            | `Option<String>`                     | `None`      | Form field name                 |
+| `form`            | `Option<String>`                     | `None`      | Form ID to associate with       |
+| `id`              | `Option<String>`                     | `None`      | HTML id attribute               |
+| `value`           | `String`                             | `"on"`      | Form submission value           |
+| `class`           | `Option<String>`                     | `None`      | Additional CSS classes          |
+
+#### CheckboxProvider
+
+| Prop              | Type                                 | Default     | Description                     |
+| ----------------- | ------------------------------------ | ----------- | ------------------------------- |
+| `checked`         | `Option<CheckedState>`               | `None`      | Controlled checked state        |
+| `default_checked` | `CheckedState`                       | `Unchecked` | Initial state when uncontrolled |
+| `onchange`        | `Option<EventHandler<CheckedState>>` | `None`      | Callback when state changes     |
+| `disabled`        | `bool`                               | `false`     | Disable the checkbox            |
+| `required`        | `bool`                               | `false`     | Mark as required field          |
+| `name`            | `Option<String>`                     | `None`      | Form field name                 |
+| `form`            | `Option<String>`                     | `None`      | Form ID to associate with       |
+| `value`           | `String`                             | `"on"`      | Form submission value           |
+
+#### CheckboxTrigger
+
+| Prop        | Type                                  | Default | Description            |
+| ----------- | ------------------------------------- | ------- | ---------------------- |
+| `class`     | `Option<String>`                      | `None`  | Additional CSS classes |
+| `id`        | `Option<String>`                      | `None`  | HTML id attribute      |
+| `onclick`   | `Option<EventHandler<MouseEvent>>`    | `None`  | Custom click handler   |
+| `onkeydown` | `Option<EventHandler<KeyboardEvent>>` | `None`  | Custom keydown handler |
+
+#### CheckboxIndicator
+
+| Prop          | Type             | Default | Description                 |
+| ------------- | ---------------- | ------- | --------------------------- |
+| `class`       | `Option<String>` | `None`  | Additional CSS classes      |
+| `force_mount` | `bool`           | `false` | Keep mounted for animations |
+
+#### CheckboxLabel
+
+| Prop     | Type             | Default | Description               |
+| -------- | ---------------- | ------- | ------------------------- |
+| `for_id` | `Option<String>` | `None`  | ID of associated checkbox |
+| `class`  | `Option<String>` | `None`  | Additional CSS classes    |
+
+### Checked States
+
+The checkbox supports three states via the `CheckedState` enum:
+
+```rust
+// Unchecked - Empty checkbox
+Checkbox {
+    default_checked: CheckedState::Unchecked,
+    CheckboxIndicator {}
+}
+
+// Checked - Shows checkmark (✓)
+Checkbox {
+    default_checked: CheckedState::Checked,
+    CheckboxIndicator {}
+}
+
+// Indeterminate - Shows dash (−) for mixed/partial selection
+Checkbox {
+    default_checked: CheckedState::Indeterminate,
+    CheckboxIndicator {}
+}
+```
+
+### Controlled State
+
+```rust
+let mut checked = use_signal(|| CheckedState::Unchecked);
+
+rsx! {
+    div {
+        Checkbox {
+            checked: Some(checked()),
+            onchange: move |state| *checked.write() = state,
+            CheckboxIndicator {}
+        }
+        p { "State: {checked:?}" }
+    }
+}
+```
+
+### Provider Pattern (Advanced)
+
+For complex scenarios requiring the full Radix UI architecture:
+
+```rust
+CheckboxProvider {
+    default_checked: CheckedState::Unchecked,
+    name: Some("newsletter".to_string()),
+    onchange: move |state| {
+        println!("Checkbox changed to: {:?}", state);
+    },
+    CheckboxTrigger {
+        id: Some("newsletter".to_string()),
+        CheckboxIndicator {}
+    }
+}
+CheckboxLabel {
+    for_id: Some("newsletter".to_string()),
+    "Subscribe to newsletter"
+}
+```
+
+### Form Integration
+
+```rust
+form {
+    id: "signup",
+    onsubmit: move |evt| {
+        evt.prevent_default();
+        // Handle form submission
+    },
+
+    div {
+        class: "flex items-center gap-2",
+        Checkbox {
+            name: Some("terms".to_string()),
+            form: Some("signup".to_string()),
+            required: true,
+            CheckboxIndicator {}
+        }
+        CheckboxLabel {
+            for_id: Some("terms".to_string()),
+            "I accept the terms *"
+        }
+    }
+
+    button {
+        r#type: "submit",
+        "Submit"
+    }
+}
+```
+
+### Disabled State
+
+```rust
+Checkbox {
+    default_checked: CheckedState::Checked,
+    disabled: true,
+    CheckboxIndicator {}
+}
+```
+
+### Select All Pattern (Indeterminate)
+
+```rust
+let mut all = use_signal(|| CheckedState::Unchecked);
+let mut item1 = use_signal(|| CheckedState::Unchecked);
+let mut item2 = use_signal(|| CheckedState::Unchecked);
+
+// Update parent based on children
+use_effect(move || {
+    let i1 = item1();
+    let i2 = item2();
+
+    if i1 == CheckedState::Checked && i2 == CheckedState::Checked {
+        all.set(CheckedState::Checked);
+    } else if i1 == CheckedState::Unchecked && i2 == CheckedState::Unchecked {
+        all.set(CheckedState::Unchecked);
+    } else {
+        all.set(CheckedState::Indeterminate);  // Mixed state
+    }
+});
+
+rsx! {
+    div {
+        // Parent "Select All" checkbox
+        Checkbox {
+            checked: Some(all()),
+            onchange: move |state| {
+                all.set(state);
+                item1.set(state);
+                item2.set(state);
+            },
+            CheckboxIndicator {}
+        }
+        "Select All"
+
+        // Child checkboxes
+        div {
+            class: "ml-4 space-y-2",
+            div {
+                Checkbox {
+                    checked: Some(item1()),
+                    onchange: move |state| item1.set(state),
+                    CheckboxIndicator {}
+                }
+                "Item 1"
+            }
+            div {
+                Checkbox {
+                    checked: Some(item2()),
+                    onchange: move |state| item2.set(state),
+                    CheckboxIndicator {}
+                }
+                "Item 2"
+            }
+        }
+    }
+}
+```
+
+### Custom Indicator
+
+Replace the default checkmark with custom content:
+
+```rust
+Checkbox {
+    default_checked: CheckedState::Unchecked,
+    CheckboxIndicator {
+        // Custom emoji or text instead of SVG
+        "✅"
+    }
+}
+```
+
+### Accessibility
+
+The checkbox component includes full WAI-ARIA support:
+
+- **role="checkbox"** - Proper semantic role
+- **aria-checked** - States: `"true"`, `"false"`, or `"mixed"` (indeterminate)
+- **aria-required** - Marks required fields
+- **Keyboard Navigation**:
+  - **Tab** - Focus/unfocus the checkbox
+  - **Space** - Toggle checked state
+  - **Enter** - Prevented (per WAI-ARIA spec)
+
+```rust
+// Accessible checkbox with label
+Checkbox {
+    id: Some("agree".to_string()),
+    required: true,
+    CheckboxIndicator {}
+}
+CheckboxLabel {
+    for_id: Some("agree".to_string()),
+    "I agree to the terms (required)"
+}
+```
+
+### Component Architecture
+
+The checkbox follows Radix UI's composition pattern:
+
+```
+CheckboxProvider (state context)
+└── CheckboxTrigger (button[role="checkbox"])
+    ├── CheckboxIndicator (visual indicator)
+    └── CheckboxBubbleInput (hidden form input)
+```
+
+**Components:**
+
+- **CheckboxProvider** - Manages state and provides context
+- **CheckboxTrigger** - Interactive button element
+- **CheckboxIndicator** - Shows checkmark or dash icon
+- **CheckboxBubbleInput** - Hidden input for form submission (automatic)
+- **Checkbox** - Convenience wrapper (Provider + Trigger)
+- **CheckboxLabel** - Accessible label helper
+
+### Advanced Features
+
+**Form Reset Support:**
+Native HTML form reset automatically restores the checkbox to its `default_checked` state.
+
+**Event Composition:**
+Custom event handlers can be combined with built-in behavior:
+
+```rust
+CheckboxTrigger {
+    onclick: move |evt| {
+        println!("Custom click handler");
+        // Built-in toggle still works
+    },
+    onkeydown: move |evt| {
+        println!("Key pressed: {:?}", evt.key());
+    },
+    CheckboxIndicator {}
+}
+```
+
+**Force Mount:**
+Keep the indicator mounted even when unchecked (useful for animations):
+
+```rust
+CheckboxIndicator {
+    force_mount: true,
+    // Indicator always rendered, visibility controlled by CSS
 }
 ```
 
