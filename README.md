@@ -8,7 +8,7 @@ A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind
 
 ## Features
 
-✨ **9 High-Quality Components**
+✨ **10 High-Quality Components**
 
 - 🎯 **Accordion** - Collapsible sections with single/multiple modes
 - 👤 **Avatar** - User avatars with image loading and fallback support
@@ -16,6 +16,7 @@ A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind
 - 🔘 **Button** - Versatile buttons with 6 variants and 6 sizes
 - 🃏 **Card** - Flexible card container with header, content, and footer sections
 - 💬 **Dialog** - Accessible modal dialogs with overlay and keyboard handling
+- 📭 **Empty** - Empty state component for "no content" scenarios
 - 🌀 **Portal** - Render content outside the parent DOM hierarchy
 - ⏳ **Spinner** - Loading indicators with multiple sizes and colors
 - 💬 **Tooltip** - Hover-triggered tooltips with flexible positioning
@@ -84,9 +85,10 @@ fn App() -> Element {
 4. **Button** - Versatile buttons with 6 variants and 6 sizes
 5. **Card** - Flexible card container with header, content, and footer sections
 6. **Dialog** - Modal dialogs with overlay, focus management, and keyboard controls
-7. **Portal** - Render content to different DOM locations (modals, overlays)
-8. **Spinner** - Loading indicators with multiple sizes
-9. **Tooltip** - Hover-triggered tooltips with positioning
+7. **Empty** - Empty state component for "no content" scenarios
+8. **Portal** - Render content to different DOM locations (modals, overlays)
+9. **Spinner** - Loading indicators with multiple sizes
+10. **Tooltip** - Hover-triggered tooltips with positioning
 
 See `COMPONENTS.md` for detailed documentation and API references for all components.
 
@@ -138,8 +140,9 @@ src/
 │   ├── avatar/
 │   ├── badge/
 │   ├── button/
-│   ├── card/             # NEW: Card component
+│   ├── card/
 │   ├── dialog/
+│   ├── empty/            # NEW: Empty component
 │   ├── portal/
 │   ├── spinner/
 │   └── tooltip/

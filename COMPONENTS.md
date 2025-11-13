@@ -11,9 +11,10 @@ A comprehensive guide to using the Dioxus 0.7 component library. All components 
 5. [Card](#card)
 6. [Checkbox](#checkbox)
 7. [Dialog](#dialog)
-8. [Portal](#portal)
-9. [Spinner](#spinner)
-10. [Tooltip](#tooltip)
+8. [Empty](#empty)
+9. [Portal](#portal)
+10. [Spinner](#spinner)
+11. [Tooltip](#tooltip)
 
 ---
 
@@ -1369,6 +1370,226 @@ The component is split into composable parts following the Radix UI pattern:
   }
 }
 ```
+
+---
+
+## Empty
+
+An Empty state component for displaying "no content" scenarios. Perfect for search results, empty lists, inbox zero states, and other situations where you need to communicate the absence of data.
+
+### Basic Usage
+
+```rust
+use dioxus::prelude::*;
+use crate::components::{
+    Empty, EmptyHeader, EmptyMedia, EmptyMediaVariant,
+    EmptyTitle, EmptyDescription, EmptyContent
+};
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        Empty {
+            EmptyHeader {
+                EmptyMedia {
+                    variant: EmptyMediaVariant::Icon,
+                    // Icon SVG here
+                }
+                EmptyTitle { "No results found" }
+                EmptyDescription { "Try adjusting your search" }
+            }
+            EmptyContent {
+                Button { "Clear filters" }
+            }
+        }
+    }
+}
+```
+
+### Empty with Icon Variant
+
+```rust
+Empty {
+    class: "min-h-[300px]",
+    EmptyHeader {
+        EmptyMedia {
+            variant: EmptyMediaVariant::Icon,
+            svg {
+                class: "size-6",
+                // SVG icon
+            }
+        }
+        EmptyTitle { "No files found" }
+        EmptyDescription { "You haven't uploaded any files yet." }
+    }
+    EmptyContent {
+        Button { "Upload file" }
+    }
+}
+```
+
+### Simple Empty (No Icon)
+
+```rust
+Empty {
+    EmptyHeader {
+        EmptyTitle { "No items" }
+        EmptyDescription { "There are no items to display at this time." }
+    }
+}
+```
+
+### Props
+
+#### Empty
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Empty state content    |
+
+#### EmptyHeader
+
+| Prop       | Type             | Default  | Description                                |
+| ---------- | ---------------- | -------- | ------------------------------------------ |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes                     |
+| `children` | `Element`        | Required | Header content (media, title, description) |
+
+#### EmptyMedia
+
+| Prop       | Type                | Default   | Description            |
+| ---------- | ------------------- | --------- | ---------------------- |
+| `variant`  | `EmptyMediaVariant` | `Default` | Visual style variant   |
+| `class`    | `Option<String>`    | `None`    | Additional CSS classes |
+| `children` | `Element`           | Required  | Icon or image content  |
+
+#### EmptyTitle
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Title text             |
+
+#### EmptyDescription
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Description text       |
+
+#### EmptyContent
+
+| Prop       | Type             | Default  | Description                          |
+| ---------- | ---------------- | -------- | ------------------------------------ |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes               |
+| `children` | `Element`        | Required | Action buttons or additional content |
+
+### Media Variants
+
+```rust
+pub enum EmptyMediaVariant {
+    Default,  // Transparent background
+    Icon,     // Muted background with icon styling
+}
+```
+
+| Variant   | Description                                    | Use Case                          |
+| --------- | ---------------------------------------------- | --------------------------------- |
+| `Default` | Transparent background                         | For custom styled icons or images |
+| `Icon`    | Muted background with size-10, rounded corners | For standard icon displays        |
+
+### Empty State Examples
+
+#### Search Results
+
+```rust
+Empty {
+    EmptyHeader {
+        EmptyMedia {
+            variant: EmptyMediaVariant::Icon,
+            // Search icon
+        }
+        EmptyTitle { "No results found" }
+        EmptyDescription {
+            "We couldn't find what you're looking for. Try adjusting your search."
+        }
+    }
+    EmptyContent {
+        Button { "Clear search" }
+    }
+}
+```
+
+#### Inbox Zero
+
+```rust
+Empty {
+    EmptyHeader {
+        EmptyMedia {
+            variant: EmptyMediaVariant::Icon,
+            // Mail icon
+        }
+        EmptyTitle { "Inbox zero!" }
+        EmptyDescription { "You're all caught up. Great work!" }
+    }
+}
+```
+
+#### No Data
+
+```rust
+Empty {
+    EmptyHeader {
+        EmptyMedia {
+            variant: EmptyMediaVariant::Icon,
+            // Chart icon
+        }
+        EmptyTitle { "No data available" }
+        EmptyDescription {
+            "Start collecting data to see insights and analytics here."
+        }
+    }
+    EmptyContent {
+        div {
+            class: "flex gap-2",
+            Button { "Get started" }
+            Button { variant: ButtonVariant::Outline, "Learn more" }
+        }
+    }
+}
+```
+
+### Features
+
+- ✅ Flexible layout with optional sections
+- ✅ Two media variant styles (default, icon)
+- ✅ Centered, balanced text layout
+- ✅ Support for icons, images, or custom media
+- ✅ Action button support in content area
+- ✅ Responsive padding and spacing
+- ✅ Link styling in descriptions
+- ✅ Customizable through Tailwind classes
+
+### Best Practices
+
+1. **Use descriptive titles**: Be clear about what's missing
+2. **Provide context**: Explain why the state is empty
+3. **Offer actions**: Include buttons to help users move forward
+4. **Choose appropriate icons**: Use icons that match the context
+5. **Keep it simple**: Don't overcomplicate empty states
+6. **Use EmptyMedia variant**: Use `Icon` variant for consistent styling
+7. **Min-height**: Add `min-h-[300px]` or similar to prevent layout shifts
+8. **Border styling**: Use `border` or `border-dashed` classes for visual boundaries
+
+### Styling
+
+The Empty component uses these base styles:
+
+- Layout: `flex flex-col items-center justify-center`
+- Spacing: `gap-6` between sections, `p-6` padding (md: `p-12`)
+- Text: `text-center text-balance` for readable, centered text
+- Border: `border-dashed rounded-lg` for subtle boundaries
+- Media (Icon): `size-10 rounded-lg bg-muted` with proper icon sizing
 
 ---
 

@@ -11,6 +11,7 @@
 //! - **Button** - Versatile button with 6 variants and 6 size options
 //! - **Card** - Flexible card container with header, content, and footer sections
 //! - **Dialog** - Accessible modal dialogs with overlay, focus trap, and keyboard handling
+//! - **Empty** - Empty state component for "no content" scenarios
 //! - **Portal** - Render content outside the parent DOM hierarchy (modals, overlays)
 //! - **Spinner** - Loading indicator with multiple sizes and colors
 //! - **Tooltip** - Hover-triggered tooltips with flexible positioning
@@ -76,6 +77,10 @@ pub use components::{
     dialog::{
         Dialog, DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogTitle,
         DialogTrigger,
+    },
+    empty::{
+        Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant,
+        EmptyTitle,
     },
     portal::Portal,
     spinner::{Spinner, SpinnerSize},
