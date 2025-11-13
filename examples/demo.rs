@@ -1,11 +1,11 @@
 use dioxus::prelude::*;
 use dioxus_components::{
     Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionType, Avatar,
-    AvatarFallback, AvatarImage, Badge, BadgeVariant, Button, ButtonVariant, Checkbox,
-    CheckboxIndicator, CheckboxLabel, CheckboxProvider, CheckboxTrigger, CheckedState, Dialog,
-    DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogTitle, DialogTrigger,
-    Portal, Spinner, SpinnerSize, Tooltip, TooltipContent, TooltipProvider, TooltipSide,
-    TooltipTrigger,
+    AvatarFallback, AvatarImage, Badge, BadgeVariant, Button, ButtonVariant, Card, CardAction,
+    CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, CheckboxIndicator,
+    CheckboxLabel, CheckboxProvider, CheckboxTrigger, CheckedState, Dialog, DialogClose,
+    DialogContent, DialogDescription, DialogOverlay, DialogTitle, DialogTrigger, Portal, Spinner,
+    SpinnerSize, Tooltip, TooltipContent, TooltipProvider, TooltipSide, TooltipTrigger,
 };
 
 #[derive(Debug, Clone, Routable, PartialEq)]
@@ -194,6 +194,21 @@ fn Home() -> Element {
                     }
 
                     DialogExample {}
+                }
+            }
+
+            // Card Examples
+            div {
+                class: "w-full max-w-2xl space-y-4",
+                h2 { class: "text-2xl font-bold text-center", "Card Examples:" }
+
+                div {
+                    class: "space-y-6 p-6 border rounded-lg bg-card",
+                    p { class: "text-sm text-muted-foreground mb-4",
+                        "Card - Flexible card container with header, content, and footer sections."
+                    }
+
+                    CardExample {}
                 }
             }
 
@@ -734,6 +749,212 @@ fn DialogExample() -> Element {
                                 "Save Changes"
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// Card Examples
+#[component]
+fn CardExample() -> Element {
+    rsx! {
+        div {
+            class: "grid gap-6 md:grid-cols-2",
+
+            // Basic Card
+            Card {
+                class: "w-full",
+                CardHeader {
+                    CardTitle { "Notifications" }
+                    CardDescription { "You have 3 unread messages." }
+                }
+                CardContent {
+                    p { "Check your inbox for updates." }
+                }
+                CardFooter {
+                    Button {
+                        variant: ButtonVariant::Default,
+                        class: "w-full",
+                        "Mark all as read"
+                    }
+                }
+            }
+
+            // Card with Action
+            Card {
+                class: "w-full",
+                CardHeader {
+                    CardTitle { "Team Members" }
+                    CardDescription { "Invite and manage your team." }
+                    CardAction {
+                        Button {
+                            variant: ButtonVariant::Ghost,
+                            class: "h-8 w-8 p-0",
+                            "+"
+                        }
+                    }
+                }
+                CardContent {
+                    div {
+                        class: "space-y-2",
+                        div {
+                            class: "flex items-center gap-2",
+                            Avatar {
+                                class: "h-8 w-8",
+                                AvatarImage {
+                                    src: "https://github.com/shadcn.png",
+                                    alt: "User"
+                                }
+                                AvatarFallback { "CN" }
+                            }
+                            div {
+                                p { class: "text-sm font-medium", "John Doe" }
+                                p { class: "text-xs text-muted-foreground", "john@example.com" }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Stats Card
+            Card {
+                class: "w-full",
+                CardHeader {
+                    CardTitle { "Total Revenue" }
+                    CardDescription { "January - December 2024" }
+                }
+                CardContent {
+                    div {
+                        class: "space-y-2",
+                        p { class: "text-3xl font-bold", "$45,231.89" }
+                        p { class: "text-sm text-muted-foreground",
+                            "+20.1% from last year"
+                        }
+                    }
+                }
+            }
+
+            // Form Card
+            Card {
+                class: "w-full",
+                CardHeader {
+                    CardTitle { "Create Account" }
+                    CardDescription { "Enter your details to get started." }
+                }
+                CardContent {
+                    div {
+                        class: "space-y-4",
+                        div {
+                            class: "space-y-2",
+                            label {
+                                class: "text-sm font-medium",
+                                "Email"
+                            }
+                            input {
+                                class: "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm",
+                                r#type: "email",
+                                placeholder: "m@example.com"
+                            }
+                        }
+                        div {
+                            class: "space-y-2",
+                            label {
+                                class: "text-sm font-medium",
+                                "Password"
+                            }
+                            input {
+                                class: "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm",
+                                r#type: "password"
+                            }
+                        }
+                    }
+                }
+                CardFooter {
+                    class: "border-t",
+                    Button {
+                        variant: ButtonVariant::Default,
+                        class: "w-full",
+                        "Create Account"
+                    }
+                }
+            }
+
+            // Pricing Card
+            Card {
+                class: "w-full",
+                CardHeader {
+                    CardTitle { "Pro Plan" }
+                    CardDescription { "For professional use" }
+                }
+                CardContent {
+                    div {
+                        class: "space-y-4",
+                        div {
+                            p { class: "text-4xl font-bold", "$29" }
+                            p { class: "text-sm text-muted-foreground", "per month" }
+                        }
+                        ul {
+                            class: "space-y-2 text-sm",
+                            li { class: "flex items-center",
+                                span { class: "mr-2", "✓" }
+                                "Unlimited projects"
+                            }
+                            li { class: "flex items-center",
+                                span { class: "mr-2", "✓" }
+                                "Priority support"
+                            }
+                            li { class: "flex items-center",
+                                span { class: "mr-2", "✓" }
+                                "Advanced analytics"
+                            }
+                        }
+                    }
+                }
+                CardFooter {
+                    Button {
+                        variant: ButtonVariant::Default,
+                        class: "w-full",
+                        "Subscribe"
+                    }
+                }
+            }
+
+            // Activity Card
+            Card {
+                class: "w-full",
+                CardHeader {
+                    CardTitle { "Recent Activity" }
+                    CardDescription { "Your latest actions" }
+                }
+                CardContent {
+                    div {
+                        class: "space-y-4",
+                        div {
+                            class: "flex items-start gap-3",
+                            Badge { variant: BadgeVariant::Default, "New" }
+                            div {
+                                p { class: "text-sm font-medium", "Project created" }
+                                p { class: "text-xs text-muted-foreground", "2 hours ago" }
+                            }
+                        }
+                        div {
+                            class: "flex items-start gap-3",
+                            Badge { variant: BadgeVariant::Secondary, "Update" }
+                            div {
+                                p { class: "text-sm font-medium", "Settings changed" }
+                                p { class: "text-xs text-muted-foreground", "5 hours ago" }
+                            }
+                        }
+                    }
+                }
+                CardFooter {
+                    class: "border-t",
+                    Button {
+                        variant: ButtonVariant::Ghost,
+                        class: "w-full",
+                        "View all activity"
                     }
                 }
             }

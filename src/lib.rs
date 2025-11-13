@@ -9,6 +9,7 @@
 //! - **Avatar** - User avatar display with image loading and fallback support
 //! - **Badge** - Flexible badge component with multiple style variants
 //! - **Button** - Versatile button with 6 variants and 6 size options
+//! - **Card** - Flexible card container with header, content, and footer sections
 //! - **Dialog** - Accessible modal dialogs with overlay, focus trap, and keyboard handling
 //! - **Portal** - Render content outside the parent DOM hierarchy (modals, overlays)
 //! - **Spinner** - Loading indicator with multiple sizes and colors
@@ -67,6 +68,7 @@ pub use components::{
     avatar::{Avatar, AvatarFallback, AvatarImage, ImageLoadingStatus},
     badge::{Badge, BadgeVariant},
     button::{Button, ButtonSize, ButtonVariant},
+    card::{Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle},
     checkbox::{
         Checkbox, CheckboxBubbleInput, CheckboxContext, CheckboxIndicator, CheckboxLabel,
         CheckboxProvider, CheckboxTrigger, CheckedState,

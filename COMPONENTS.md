@@ -8,11 +8,12 @@ A comprehensive guide to using the Dioxus 0.7 component library. All components 
 2. [Avatar](#avatar)
 3. [Badge](#badge)
 4. [Button](#button)
-5. [Checkbox](#checkbox)
-6. [Dialog](#dialog)
-7. [Portal](#portal)
-8. [Spinner](#spinner)
-9. [Tooltip](#tooltip)
+5. [Card](#card)
+6. [Checkbox](#checkbox)
+7. [Dialog](#dialog)
+8. [Portal](#portal)
+9. [Spinner](#spinner)
+10. [Tooltip](#tooltip)
 
 ---
 
@@ -434,6 +435,212 @@ Button {
     "Button with Icon"
 }
 ```
+
+---
+
+## Card
+
+A flexible card container component with optional header, content, and footer sections. Perfect for displaying grouped information, forms, and content blocks.
+
+### Basic Usage
+
+```rust
+use dioxus::prelude::*;
+use crate::components::{
+    Card, CardHeader, CardTitle, CardDescription,
+    CardContent, CardFooter, CardAction
+};
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        Card {
+            class: "w-[350px]",
+            CardHeader {
+                CardTitle { "Notifications" }
+                CardDescription { "You have 3 unread messages." }
+            }
+            CardContent {
+                p { "Check your inbox for updates." }
+            }
+            CardFooter {
+                Button { "Mark all as read" }
+            }
+        }
+    }
+}
+```
+
+### Card with Action
+
+Add action buttons to the header:
+
+```rust
+Card {
+    CardHeader {
+        CardTitle { "Team Members" }
+        CardDescription { "Invite and manage your team." }
+        CardAction {
+            Button {
+                variant: ButtonVariant::Ghost,
+                "+"
+            }
+        }
+    }
+    CardContent {
+        // Team member list
+    }
+}
+```
+
+### Props
+
+#### Card
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Card content           |
+
+#### CardHeader
+
+| Prop       | Type             | Default  | Description                                 |
+| ---------- | ---------------- | -------- | ------------------------------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes                      |
+| `children` | `Element`        | Required | Header content (title, description, action) |
+
+#### CardTitle
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Title text             |
+
+#### CardDescription
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Description text       |
+
+#### CardAction
+
+| Prop       | Type             | Default  | Description                |
+| ---------- | ---------------- | -------- | -------------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes     |
+| `children` | `Element`        | Required | Action buttons or controls |
+
+#### CardContent
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Main content           |
+
+#### CardFooter
+
+| Prop       | Type             | Default  | Description            |
+| ---------- | ---------------- | -------- | ---------------------- |
+| `class`    | `Option<String>` | `None`   | Additional CSS classes |
+| `children` | `Element`        | Required | Footer content         |
+
+### Card Examples
+
+#### Stats Card
+
+```rust
+Card {
+    CardHeader {
+        CardTitle { "Total Revenue" }
+        CardDescription { "January - December 2024" }
+    }
+    CardContent {
+        p { class: "text-3xl font-bold", "$45,231.89" }
+        p { class: "text-sm text-muted-foreground",
+            "+20.1% from last year"
+        }
+    }
+}
+```
+
+#### Form Card
+
+```rust
+Card {
+    CardHeader {
+        CardTitle { "Create Account" }
+        CardDescription { "Enter your details to get started." }
+    }
+    CardContent {
+        div {
+            class: "space-y-4",
+            // Form fields
+        }
+    }
+    CardFooter {
+        class: "border-t",
+        Button { "Create Account" }
+    }
+}
+```
+
+#### Pricing Card
+
+```rust
+Card {
+    CardHeader {
+        CardTitle { "Pro Plan" }
+        CardDescription { "For professional use" }
+    }
+    CardContent {
+        div {
+            p { class: "text-4xl font-bold", "$29" }
+            p { class: "text-sm text-muted-foreground", "per month" }
+        }
+        ul {
+            class: "space-y-2",
+            li { "✓ Unlimited projects" }
+            li { "✓ Priority support" }
+            li { "✓ Advanced analytics" }
+        }
+    }
+    CardFooter {
+        Button { "Subscribe" }
+    }
+}
+```
+
+### Features
+
+- ✅ Flexible layout with optional sections
+- ✅ Header with title, description, and action support
+- ✅ Automatic grid layout for header actions
+- ✅ Customizable through Tailwind classes
+- ✅ Consistent spacing and styling
+- ✅ Border support for header and footer
+- ✅ Responsive design patterns
+- ✅ Shadow and rounded corners
+
+### Best Practices
+
+1. **Use semantic structure**: Include CardHeader, CardContent, and CardFooter for clear organization
+2. **Consistent widths**: Apply width classes to Card for consistent sizing
+3. **Action placement**: Use CardAction for buttons in the header
+4. **Border separators**: Add `border-t` or `border-b` classes to CardFooter/CardHeader for visual separation
+5. **Spacing**: The Card automatically handles internal spacing with `gap-6`
+6. **Content padding**: CardContent and CardFooter include horizontal padding automatically
+7. **Responsive layouts**: Use grid classes on parent containers for responsive card layouts
+
+### Styling
+
+The Card component uses these base styles:
+
+- Background: `bg-card`
+- Text color: `text-card-foreground`
+- Border: `border` with rounded corners `rounded-xl`
+- Shadow: `shadow-sm`
+- Internal spacing: `gap-6` between sections
+- Padding: `py-6` vertical, `px-6` on content/footer
 
 ---
 
