@@ -1,6 +1,6 @@
 [package]
 name = "dioxus_components"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["letri <>"]
 edition = "2021"
 description = "A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind CSS v4"
