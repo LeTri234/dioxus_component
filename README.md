@@ -8,13 +8,14 @@ A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind
 
 ## Features
 
-✨ **10 High-Quality Components**
+✨ **11 High-Quality Components**
 
 - 🎯 **Accordion** - Collapsible sections with single/multiple modes
 - 👤 **Avatar** - User avatars with image loading and fallback support
 - 🏷️ **Badge** - Flexible badges with 4 style variants
 - 🔘 **Button** - Versatile buttons with 6 variants and 6 sizes
 - 🃏 **Card** - Flexible card container with header, content, and footer sections
+- ✅ **Checkbox** - Three-state checkbox (checked/unchecked/indeterminate)
 - 💬 **Dialog** - Accessible modal dialogs with overlay and keyboard handling
 - 📭 **Empty** - Empty state component for "no content" scenarios
 - 🌀 **Portal** - Render content outside the parent DOM hierarchy
@@ -84,11 +85,12 @@ fn App() -> Element {
 3. **Badge** - Small decorative labels with 4 variants
 4. **Button** - Versatile buttons with 6 variants and 6 sizes
 5. **Card** - Flexible card container with header, content, and footer sections
-6. **Dialog** - Modal dialogs with overlay, focus management, and keyboard controls
-7. **Empty** - Empty state component for "no content" scenarios
-8. **Portal** - Render content to different DOM locations (modals, overlays)
-9. **Spinner** - Loading indicators with multiple sizes
-10. **Tooltip** - Hover-triggered tooltips with positioning
+6. **Checkbox** - Three-state checkbox (checked/unchecked/indeterminate) with full Radix UI parity
+7. **Dialog** - Modal dialogs with overlay, focus management, and keyboard controls
+8. **Empty** - Empty state component for "no content" scenarios
+9. **Portal** - Render content to different DOM locations (modals, overlays)
+10. **Spinner** - Loading indicators with multiple sizes
+11. **Tooltip** - Hover-triggered tooltips with positioning
 
 See `COMPONENTS.md` for detailed documentation and API references for all components.
 
@@ -141,6 +143,7 @@ src/
 │   ├── badge/
 │   ├── button/
 │   ├── card/
+│   ├── checkbox/
 │   ├── dialog/
 │   ├── empty/            # NEW: Empty component
 │   ├── portal/
@@ -246,6 +249,16 @@ cargo doc --lib --open
 MIT
 
 ## Changelog
+
+### v0.1.1 - Latest Release 🚀
+
+- ✅ Added **Checkbox** component with three states (checked/unchecked/indeterminate)
+- ✅ Added **Dialog** component with modal support, focus trap, and keyboard handling
+- ✅ Added **Card** component with flexible header, content, and footer sections
+- ✅ Added **Empty** component for empty state scenarios
+- ✅ 11 total components now available
+- ✅ Enhanced documentation with comprehensive examples
+- ✅ All components use `cn` utility for class merging
 
 ### v0.1.0 - Published 🎉
 

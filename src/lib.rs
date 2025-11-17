@@ -1,15 +1,18 @@
 //! # Dioxus Components Library
 //!
+//! **Version: 0.1.1**
+//!
 //! A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind CSS v4
 //! and following Radix UI design patterns.
 //!
-//! ## Components
+//! ## Components (11 Total)
 //!
 //! - **Accordion** - Vertically stacked interactive headings with reveal sections
 //! - **Avatar** - User avatar display with image loading and fallback support
 //! - **Badge** - Flexible badge component with multiple style variants
 //! - **Button** - Versatile button with 6 variants and 6 size options
 //! - **Card** - Flexible card container with header, content, and footer sections
+//! - **Checkbox** - Three-state checkbox (checked/unchecked/indeterminate)
 //! - **Dialog** - Accessible modal dialogs with overlay, focus trap, and keyboard handling
 //! - **Empty** - Empty state component for "no content" scenarios
 //! - **Portal** - Render content outside the parent DOM hierarchy (modals, overlays)
@@ -22,7 +25,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! dioxus_components = { version = "0.1.0", path = "." }
+//! dioxus_components = "0.1.1"
 //! dioxus = { version = "0.7.1", features = ["web"] }
 //! ```
 //!

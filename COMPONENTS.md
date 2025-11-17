@@ -1,6 +1,19 @@
 # Dioxus Components Documentation
 
+**Version: 0.1.1** | [GitHub](https://github.com/LeTri234/dioxus_component) | [Crates.io](https://crates.io/crates/dioxus_components)
+
 A comprehensive guide to using the Dioxus 0.7 component library. All components are built with Tailwind CSS v4 and follow Radix UI design patterns.
+
+## Overview
+
+This library provides **11 production-ready components** for building modern web applications with Dioxus 0.7:
+
+- ✅ **WAI-ARIA compliant** - Full accessibility support
+- ✅ **Tailwind CSS v4** - Modern utility-first styling
+- ✅ **Radix UI patterns** - Industry-standard component architecture
+- ✅ **Dark mode ready** - All components support theming
+- ✅ **Fully typed** - TypeScript-like type safety with Rust
+- ✅ **No JavaScript** - Pure Rust/WASM implementation
 
 ## Table of Contents
 
