@@ -38,11 +38,15 @@ A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind
 
 ## Installation
 
+> **⚠️ Important:** Tailwind must be configured to scan the library source code, otherwise utility classes (like `size-12`, `px-4`, etc.) won't be generated. See [Step 2](#2-configure-tailwind-css) below.
+
+### 1. Add the Rust Dependency
+
 Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-dioxus_components = "0.1"
+dioxus_components = "0.1.2"
 dioxus = { version = "0.7.1", features = ["web"] }
 ```
 
@@ -51,6 +55,95 @@ Or add with cargo:
 ```bash
 cargo add dioxus_components
 ```
+
+### 2. Configure Tailwind CSS
+
+**⚠️ Critical Step:** The components use Tailwind utility classes that must be included in your CSS build.
+
+#### Option A: Use Safelist (Recommended - Works Everywhere)
+
+Download the safelist file:
+
+```bash
+curl -o safelist.json https://raw.githubusercontent.com/LeTri234/dioxus_component/main/safelist.json
+```
+
+Add to your `tailwind.config.js`:
+
+```javascript
+module.exports = {
+  content: ["./src/**/*.{rs,html}"],
+  safelist: require("./safelist.json"),
+  theme: { extend: {} },
+  plugins: [],
+};
+```
+
+#### Option B: Tailwind v4 with @source
+
+Update your `tailwind.css`:
+
+```css
+@import "tailwindcss";
+@source "../src";
+@source "../../.cargo/registry/src/*/dioxus_components-*/src";
+```
+
+#### Option C: Scan Cargo Registry (Tailwind v3)
+
+Update your `tailwind.config.js`:
+
+```javascript
+const path = require("path");
+const os = require("os");
+
+module.exports = {
+  content: [
+    "./src/**/*.{rs,html}",
+    path.join(
+      os.homedir(),
+      ".cargo/registry/src/*/dioxus_components-*/src/**/*.rs"
+    ),
+  ],
+  theme: { extend: {} },
+  plugins: [],
+};
+```
+
+### 3. Import Component Animations
+
+Download the animations CSS:
+
+```bash
+curl -o src/components.css https://raw.githubusercontent.com/LeTri234/dioxus_component/main/src/components.css
+```
+
+Import in your `tailwind.css`:
+
+```css
+@import "./components.css";
+```
+
+**What's Included:**
+
+- ✅ Accordion slide animations
+- ✅ Checkbox fade transitions
+- ✅ Spinner rotation animation
+- ✅ Tooltip slide/fade animations
+
+**Note:** The CSS file only contains custom animations. Step 2 above is required to generate utility classes like `size-12`, `px-4`, etc.
+
+**What's included:**
+
+- ✅ Accordion slide animations
+- ✅ Checkbox fade animations
+- ✅ Spinner rotation animation
+- ✅ Tooltip slide and fade animations
+- ✅ All necessary keyframes and transitions
+
+**Note:** Components like Avatar, Badge, Button, Card, Dialog, Empty, and Portal use only Tailwind utility classes and don't require additional CSS.
+
+**📚 [See detailed CSS setup guide](./CSS_SETUP.md)** for more import options and troubleshooting.
 
 ## Quick Start
 
@@ -250,7 +343,17 @@ MIT
 
 ## Changelog
 
-### v0.1.1 - Latest Release 🚀
+### v0.1.2 - Latest Release 🚀
+
+- ✅ **Interactive Showcase App** - New multi-page demo with routing
+- ✅ **Dark Theme** - Full dark mode implementation for showcase
+- ✅ **Enhanced Documentation** - Updated examples with improved styling
+- ✅ **Improved Code Blocks** - Better syntax highlighting in dark theme
+- ✅ **11 Component Demos** - Separate pages for each component
+- ✅ **Landing Page** - Overview and quick start guide
+- ✅ **Installation Guide** - Step-by-step setup instructions
+
+### v0.1.1
 
 - ✅ Added **Checkbox** component with three states (checked/unchecked/indeterminate)
 - ✅ Added **Dialog** component with modal support, focus trap, and keyboard handling
@@ -259,6 +362,7 @@ MIT
 - ✅ 11 total components now available
 - ✅ Enhanced documentation with comprehensive examples
 - ✅ All components use `cn` utility for class merging
+- ✅ **Consolidated CSS file** - Single import for all component styles
 
 ### v0.1.0 - Published 🎉
 
@@ -272,7 +376,13 @@ MIT
 ## Resources
 
 - [Crates.io Package](https://crates.io/crates/dioxus_components)
+- [Live Showcase](https://dioxus-components-showcase.vercel.app) - Interactive demo
+- [Deployment Guide](./DEPLOYMENT.md) - Deploy the showcase to various platforms
+- [Quick Start Guide](./QUICKSTART.md) - ⚡ Fix missing styles in 2 minutes
+- [Troubleshooting Guide](./TROUBLESHOOTING.md) - 🔧 Common issues and solutions
+- [Example Project Setup](./EXAMPLE_PROJECT_SETUP.md) - Step-by-step new project guide
+- [Component Documentation](./COMPONENTS.md) - Complete API reference
+- [CSS Setup Guide](./CSS_SETUP.md) - Detailed styling instructions
 - [Dioxus Documentation](https://dioxuslabs.com/learn/0.7/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Radix UI](https://www.radix-ui.com/)
-- [Documentation](COMPONENTS.md)

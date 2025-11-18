@@ -1,11 +1,18 @@
 [package]
 name = "dioxus_components"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["letri <>"]
 edition = "2021"
 description = "A comprehensive collection of reusable Dioxus 0.7 components built with Tailwind CSS v4"
 license = "MIT"
 repository = "https://github.com/LeTri234/dioxus_component"
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE",
+    "safelist.json",
+]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -17,6 +24,10 @@ path = "src/lib.rs"
 name = "demo"
 path = "src/main.rs"
 required-features = ["demo"]
+
+[[example]]
+name = "showcase"
+path = "examples/main.rs"
 
 [dependencies]
 dioxus = { version = "0.7.1", features = ["router"] }

@@ -1,6 +1,6 @@
 # Dioxus Components Documentation
 
-**Version: 0.1.1** | [GitHub](https://github.com/LeTri234/dioxus_component) | [Crates.io](https://crates.io/crates/dioxus_components)
+**Version: 0.1.2** | [GitHub](https://github.com/LeTri234/dioxus_component) | [Crates.io](https://crates.io/crates/dioxus_components)
 
 A comprehensive guide to using the Dioxus 0.7 component library. All components are built with Tailwind CSS v4 and follow Radix UI design patterns.
 
@@ -14,6 +14,107 @@ This library provides **11 production-ready components** for building modern web
 - ✅ **Dark mode ready** - All components support theming
 - ✅ **Fully typed** - TypeScript-like type safety with Rust
 - ✅ **No JavaScript** - Pure Rust/WASM implementation
+
+## Installation
+
+### 1. Add Rust Dependency
+
+```toml
+[dependencies]
+dioxus_components = "0.1.2"
+dioxus = { version = "0.7.1", features = ["web"] }
+```
+
+### 2. Configure Tailwind CSS
+
+The components use Tailwind utility classes that must be included in your CSS build. Choose one of these methods:
+
+#### Option A: Tailwind v4+ with @source (Easiest)
+
+Add to your `tailwind.css`:
+
+```css
+@import "./components.css";
+@import "tailwindcss";
+
+/* Scan your project */
+@source "../src";
+
+/* Scan dioxus_components library */
+@source "../../.cargo/registry/src/*/dioxus_components-*/src";
+```
+
+#### Option B: Safelist Configuration (Tailwind v3)
+
+Download the safelist file:
+
+```bash
+curl -o safelist.json https://raw.githubusercontent.com/LeTri234/dioxus_component/main/safelist.json
+```
+
+Update your `tailwind.config.js`:
+
+```javascript
+module.exports = {
+  content: ["./src/**/*.{rs,html}"],
+  safelist: require("./safelist.json"),
+  // ... rest of config
+};
+```
+
+#### Option C: Scan Cargo Registry (Tailwind v3)
+
+Update your `tailwind.config.js`:
+
+```javascript
+module.exports = {
+  content: [
+    "./src/**/*.{rs,html}",
+    // Scan the installed dioxus_components crate
+    "../.cargo/registry/src/*/dioxus_components-*/src/**/*.rs",
+    // Or if using a local path
+    "~/.cargo/registry/src/*/dioxus_components-*/src/**/*.rs",
+  ],
+  // ... rest of config
+};
+```
+
+### 3. Import Component Animations
+
+Download the CSS file for animations:
+
+```bash
+curl -o src/components.css https://raw.githubusercontent.com/LeTri234/dioxus_component/main/assets/components.css
+```
+
+Import in your `tailwind.css`:
+
+```css
+@import "./components.css";
+```
+
+**Or** embed directly in Rust:
+
+```rust
+const DIOXUS_COMPONENTS_CSS: &str = include_str!("./components.css");
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        document::Style { {DIOXUS_COMPONENTS_CSS} }
+        // Your components
+    }
+}
+```
+
+**What's Included:**
+
+- ✅ Accordion slide animations
+- ✅ Checkbox fade transitions
+- ✅ Spinner rotation animation
+- ✅ Tooltip slide/fade animations
+
+**Note:** The CSS file only contains custom animations. The Tailwind configuration above is required to generate utility classes like `size-12`, `px-4`, etc.
 
 ## Table of Contents
 
