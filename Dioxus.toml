@@ -3,7 +3,7 @@
 [web.app]
 
 # HTML title tag content
-title = "first_dioxus"
+title = "Dioxus Components"
 
 # include `assets` in web platform
 [web.resource]
