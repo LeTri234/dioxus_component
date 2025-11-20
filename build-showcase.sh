@@ -21,6 +21,12 @@ echo "📂 Copying built files to dist/..."
 mkdir -p dist
 cp -r target/dx/showcase/release/web/public/* dist/
 
+# Copy vercel.json if it exists
+if [ -f "vercel.json" ]; then
+    echo "📋 Copying vercel.json..."
+    cp vercel.json dist/
+fi
+
 # Display results
 echo ""
 echo "✅ Build complete!"
